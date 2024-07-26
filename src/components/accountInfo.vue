@@ -1,8 +1,11 @@
 <template>
-  <div class="account-info" v-if="account && balance">
-    <h2>WalletInfo</h2>
-    <p>Connected account: {{ account }}</p>
-    <p>Balance: {{ balance }} ETH</p>
+  <div class="account-info">
+    <div v-if="account && balance">
+      <h2>WalletInfo</h2>
+      <p>Connected account: {{ account }}</p>
+      <p>Balance: {{ balance }} ETH</p>
+    </div>
+    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 

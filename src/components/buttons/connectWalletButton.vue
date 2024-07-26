@@ -17,7 +17,7 @@ const { checkIfWalletIsConnected, toggleWalletConnection, connectWallet } =
 const { account } = storeToRefs(store);
 
 onMounted(() => {
-  connectWallet(), checkIfWalletIsConnected();
+  checkIfWalletIsConnected();
 });
 </script>
 
