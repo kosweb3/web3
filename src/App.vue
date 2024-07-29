@@ -10,9 +10,9 @@ import Nav from "@/components/nav/Nav.vue";
 
 //store
 import { storeToRefs } from "pinia";
-import { useStore } from "@/store/nav";
+import { useStoreNav } from "@/store/nav";
 
-const store = useStore();
+const store = useStoreNav();
 
 const { menuVisible } = storeToRefs(store);
 </script>

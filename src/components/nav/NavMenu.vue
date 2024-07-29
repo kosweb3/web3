@@ -14,9 +14,9 @@
 import { ref } from "vue";
 //store
 import { storeToRefs } from "pinia";
-import { useStore } from "@/store/nav";
+import { useStoreNav } from "@/store/nav";
 
-const store = useStore();
+const store = useStoreNav();
 
 const { toggleMenu } = store;
 

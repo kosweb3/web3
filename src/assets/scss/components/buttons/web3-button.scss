@@ -1,0 +1,12 @@
+.web3-button {
+  border: 1px solid $black;
+  text-decoration: none;
+  color: $baseSalatGreen;
+  padding: 7px 12px;
+  background-color: $black;
+  cursor: pointer;
+  &:hover {
+    background-color: $white;
+    color: $black;
+  }
+}

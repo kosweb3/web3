@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import Web3 from "web3";
 
-export const useStore = defineStore("connectWallet", () => {
+export const useStoreWallet = defineStore("connectWallet", () => {
   const account = ref(null);
   const balance = ref(0);
   const error = ref(null);

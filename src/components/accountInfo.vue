@@ -11,9 +11,9 @@
 
 <script setup>
 import { storeToRefs } from "pinia";
-import { useStore } from "@/store/wallet";
+import { useStoreWallet } from "@/store/wallet";
 
-const store = useStore();
+const store = useStoreWallet();
 const { account, balance, error } = storeToRefs(store);
 </script>
 

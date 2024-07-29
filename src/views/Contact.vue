@@ -30,13 +30,17 @@
         />
       </FormKit>
     </div>
-    <div v-else>Thanks for your email!!!</div>
+    <div v-else class="contact-page__thx">
+      <span>Thanks for your email!!!</span>
+      <Web3Button>To home page</Web3Button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import emailjs from "@emailjs/browser";
+import Web3Button from "../components/buttons/Web3Button.vue";
 
 const sended = ref(false);
 const data = ref({

@@ -23,6 +23,12 @@
     margin-top: 15px;
     .formkit-input {
       width: 100px;
+      cursor: pointer;
     }
+  }
+  &__thx {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
 }
