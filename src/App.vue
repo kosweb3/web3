@@ -1,14 +1,17 @@
 <template>
   <div>
-    <Nav />
-    <account-info></account-info>
-    <h1>WEB 3 project in progress...</h1>
+    <!-- <Nav /> -->
+    <div>{{ $route.fullPath }}</div>
+    <nav>
+      <router-link to="/">Home</router-link> |||
+      <router-link to="/contact">contact</router-link>
+    </nav>
+    <router-view :key="$route.path"></router-view>
   </div>
 </template>
 
 <script setup>
 import Nav from "@/components/Nav.vue";
-import accountInfo from "./components/accountInfo.vue";
 </script>
 
 <style scoped></style>

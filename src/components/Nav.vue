@@ -1,5 +1,6 @@
 <template>
   <nav class="navigation">
+    <router-link to="/contact">Contact from nav component</router-link>
     <connectWalletButton />
   </nav>
 </template>
