@@ -32,7 +32,15 @@
     </div>
     <div v-else class="contact-page__thx">
       <span>Thanks for your email!!!</span>
-      <Web3Button>To home page</Web3Button>
+      <router-link to="/">
+        <Web3Button>To home page</Web3Button>
+      </router-link>
+    </div>
+    <div class="contact-page__thx">
+      <span>Thanks for your email!!!</span>
+      <router-link :to="`${ghp}`">
+        <Web3Button>To home page</Web3Button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -41,6 +49,8 @@
 import { ref } from "vue";
 import emailjs from "@emailjs/browser";
 import Web3Button from "../components/buttons/Web3Button.vue";
+
+const ghp = ref(import.meta.env.VITE_GHP);
 
 const sended = ref(false);
 const data = ref({
