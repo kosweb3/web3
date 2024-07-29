@@ -5,9 +5,13 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 }
-#app {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+html,
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.blur {
+  filter: blur(4px);
 }

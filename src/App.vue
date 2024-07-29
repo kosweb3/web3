@@ -1,17 +1,20 @@
 <template>
   <div>
-    <!-- <Nav /> -->
-    <div>{{ $route.fullPath }}</div>
-    <nav>
-      <router-link to="/">Home</router-link> |||
-      <router-link to="/contact">contact</router-link>
-    </nav>
-    <router-view :key="$route.path"></router-view>
+    <Nav />
+    <router-view :class="{ blur: menuVisible }" />
   </div>
 </template>
 
 <script setup>
-import Nav from "@/components/Nav.vue";
+import Nav from "@/components/nav/Nav.vue";
+
+//store
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/nav";
+
+const store = useStore();
+
+const { menuVisible } = storeToRefs(store);
 </script>
 
 <style scoped></style>

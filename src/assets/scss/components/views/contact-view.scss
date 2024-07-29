@@ -1,0 +1,26 @@
+.contact-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .formkit-messages {
+    padding-left: 0;
+    margin-top: 0;
+  }
+  .formkit-message {
+    color: red;
+    font-size: 12px;
+    list-style-type: none;
+  }
+  .formkit-input {
+    width: 250px;
+  }
+  .formkit-actions .formkit-wrapper {
+    width: 100%;
+    text-align: right;
+    margin-top: 15px;
+    .formkit-input {
+      width: 100px;
+    }
+  }
+}

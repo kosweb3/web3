@@ -1,14 +1,13 @@
 <template>
-  <div>
-    Hello from Contact
+  <div class="contact-page">
     <div v-if="!sended">
       <FormKit id="myElement" type="form" @submit="sendEmail">
         <FormKit
           type="text"
-          label="тame"
+          label="Name"
           name="user_name"
           v-model="data.name"
-          help="Enter your name"
+          placeholder="Enter your name"
           validation="required"
         />
 
@@ -17,10 +16,8 @@
           label="Email"
           name="user_email"
           v-model="data.email"
-          help="Enter your e-mail"
           validation="required|email"
           placeholder="youremail@gmail.com"
-          validation-visibility="live"
         />
 
         <FormKit
@@ -29,6 +26,7 @@
           name="message"
           v-model="data.text"
           validation="required"
+          placeholder="How can we help you?"
         />
       </FormKit>
     </div>
@@ -41,7 +39,6 @@ import { ref } from "vue";
 import emailjs from "@emailjs/browser";
 
 const sended = ref(false);
-const form = ref(null);
 const data = ref({
   name: "",
   email: "",

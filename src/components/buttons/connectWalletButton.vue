@@ -9,7 +9,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useStore } from "@/store/index";
+import { useStore } from "@/store/wallet";
 
 const store = useStore();
 const { checkIfWalletIsConnected, toggleWalletConnection, connectWallet } =

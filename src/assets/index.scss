@@ -1,6 +1,11 @@
 @import "./scss/base.scss";
 @import "./scss/collors.scss";
+@import "./scss/animations.scss";
 
 // components
 @import "./scss/components/buttons/connect-wallet-button.scss";
 @import "./scss/navigation.scss";
+
+//views
+@import "./scss/components/views/home-view.scss";
+@import "./scss/components/views/contact-view.scss";
