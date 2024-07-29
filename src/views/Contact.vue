@@ -32,12 +32,6 @@
     </div>
     <div v-else class="contact-page__thx">
       <span>Thanks for your email!!!</span>
-      <router-link to="/">
-        <Web3Button>To home page</Web3Button>
-      </router-link>
-    </div>
-    <div class="contact-page__thx">
-      <span>Thanks for your email!!!</span>
       <router-link :to="`${ghp}`">
         <Web3Button>To home page</Web3Button>
       </router-link>
