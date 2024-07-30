@@ -5,9 +5,13 @@
 // components
 @import "./scss/components/buttons/connect-wallet-button.scss";
 @import "./scss/navigation.scss";
+@import "./scss/components/form.scss";
+@import "./scss/components/auth/user-data.scss";
 
 //views
 @import "./scss/components/views/home-view.scss";
 @import "./scss/components/views/contact-view.scss";
+@import "./scss/components/views/auth-view.scss";
+@import "./scss/components/views/notes-view.scss";
 
 @import "./scss/components/buttons/web3-button.scss";

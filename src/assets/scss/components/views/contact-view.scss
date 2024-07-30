@@ -4,28 +4,6 @@
   align-items: center;
   justify-content: center;
   transition: 1s;
-
-  .formkit-messages {
-    padding-left: 0;
-    margin-top: 0;
-  }
-  .formkit-message {
-    color: red;
-    font-size: 12px;
-    list-style-type: none;
-  }
-  .formkit-input {
-    width: 250px;
-  }
-  .formkit-actions .formkit-wrapper {
-    width: 100%;
-    text-align: right;
-    margin-top: 15px;
-    .formkit-input {
-      width: 100px;
-      cursor: pointer;
-    }
-  }
   &__thx {
     display: flex;
     flex-direction: column;

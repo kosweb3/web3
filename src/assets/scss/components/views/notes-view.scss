@@ -1,0 +1,49 @@
+.notes-view {
+  height: 100vh;
+  display: flex;
+  //   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__card {
+    max-width: 50%;
+  }
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  .card {
+    padding: 20px 40px;
+    border: 2px solid #000000;
+    background-color: #d0fc03;
+  }
+  .card__block {
+    gap: 15px;
+    &-text {
+      color: $black;
+    }
+    h3 {
+      color: $black;
+    }
+  }
+  .card__footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  .card__footer--info {
+    font-weight: 100;
+  }
+  .card__footer--more {
+    border: 1px solid #000000;
+    text-decoration: none;
+    color: #000000;
+    padding: 7px 12px;
+  }
+  .card__footer--more:hover {
+    background-color: #000000;
+    color: #d0fc03;
+  }
+}
