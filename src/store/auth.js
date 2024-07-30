@@ -23,13 +23,11 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         authUser.value = user;
-        console.log("user loged in", user);
         init();
       } else {
         authUser.value = "";
         clearNotes();
         // router.replace("/web3/login");
-        console.log("user loged out", user);
       }
     });
   };

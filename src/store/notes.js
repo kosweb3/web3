@@ -15,7 +15,7 @@ export const useStoreNotes = defineStore("storeNotes", () => {
     const { authUser } = storeToRefs(storeAuth);
 
     notesCollectionRef = collection(db, "users", authUser.value?.uid, "notes");
-    notesCollectionQuery = query(notesCollectionRef);
+    notesCollectionQuery = query(notesCollectionRef); //orderBy
     getNotes();
   };
 
@@ -28,7 +28,6 @@ export const useStoreNotes = defineStore("storeNotes", () => {
           content: doc.data().content,
           date: doc.data().date,
         };
-        console.log("note", note);
         newNote.push(note);
       });
       notes.value.push(newNote);
