@@ -10,7 +10,7 @@
         placeholder="youremail@gmail.com"
       />
       <FormKit
-        type="text"
+        type="password"
         label="Pasword"
         name="user_password"
         v-model="credentials.password"
@@ -44,7 +44,6 @@ const credentials = reactive({
 });
 
 const onSubmit = () => {
-  console.log("form submited");
   if (props.register) {
     registerUser(credentials);
   } else {

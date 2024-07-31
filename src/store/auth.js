@@ -40,7 +40,8 @@ export const useStoreAuth = defineStore("storeAuth", () => {
       credentials.password
     )
       .then((userCredential) => {
-        const user = userCredential.user;
+        router.push("/web3");
+        // const user = userCredential.user;
       })
       .catch((error) => {
         if (error.message.includes("email-already-in-use")) {
@@ -55,7 +56,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     signOut(auth)
       .then(() => {
         authUser.value = "";
-        console.log("test logout");
       })
       .catch(() => {
         console.log("logout error");

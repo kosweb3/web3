@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNav } from "@/store/nav";
 import { useStoreAuth } from "@/store/auth.js";
@@ -32,6 +32,7 @@ const ghp = ref(import.meta.env.VITE_GHP);
 //store Nav
 const store = useStoreNav();
 const { toggleMenu } = store;
+const { menuVisible } = storeToRefs(store);
 
 //store Auth
 const storeAuth = useStoreAuth();
@@ -45,6 +46,7 @@ const { notes } = storeToRefs(storeNotes);
 const notesLength = computed(() => {
   return notes.value[0]?.length > 0;
 });
+
 const userAuth = computed(() => {
   return authUser.value.uid;
 });

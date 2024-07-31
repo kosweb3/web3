@@ -1,7 +1,9 @@
 <template>
   <div class="home-view">
-    <AccountInfo />
-    <h1>WEB 3 project in progress...</h1>
+    <div class="home-view__container">
+      <AccountInfo />
+      <h1>WEB 3 project in progress...</h1>
+    </div>
   </div>
 </template>
 
