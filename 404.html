@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; url=./index.html" />
+    <script>
+      var redirect =
+        location.href.replace(/\/[^\/]*$/, "/") + "index.html" + location.hash;
+      location.replace(redirect);
+    </script>
+  </head>
+  <body></body>
+</html>
