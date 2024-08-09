@@ -1,0 +1,62 @@
+.mode-switch {
+  position: relative;
+
+  &__input {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  &__label {
+    display: block;
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: $white;
+    border-radius: 25px;
+    transition: 0.4s;
+
+    &::before {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      right: auto;
+      left: 0;
+      bottom: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      border: 2px $black solid;
+      background-color: $white;
+      color: $black;
+      transition: 0.4s;
+      content: "\f186";
+      font-family: "Font Awesome 5 Free";
+      font-size: 15px;
+      font-weight: 900;
+      box-sizing: border-box;
+    }
+  }
+
+  &__input:checked + .mode-switch__label {
+    background-color: $black;
+
+    &::before {
+      left: calc(100% - 30px);
+      border-color: $white;
+      background-color: $black;
+      color: $white;
+      content: "\f185";
+    }
+  }
+}

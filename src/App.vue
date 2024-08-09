@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import Nav from "@/components/nav/Nav.vue";
 
 //store
@@ -14,6 +14,7 @@ import { storeToRefs } from "pinia";
 import { useStoreNav } from "@/store/nav";
 import { useStoreAuth } from "@/store/auth.js";
 import { useStoreNotes } from "@/store/notes.js";
+import { useStoreMode } from "@/store/mode";
 
 //authStore
 const storeAuth = useStoreAuth();
@@ -27,9 +28,20 @@ const { menuVisible } = storeToRefs(store);
 const storeNotes = useStoreNotes();
 const { init } = storeNotes;
 
+//store Mode
+const storeMode = useStoreMode();
+const { toggleDark, updateBodyClass } = storeMode;
+const { isDark } = storeToRefs(storeMode);
+
 onMounted(() => {
   initAuth();
-  // init();
+  // dark Mode
+  const isDarkStored = localStorage.getItem("isDark") === "true";
+  // check if this string or null
+  // check if localStortage('isDark') is string `"true"` ->  isDark.value is true
+  // check if localStortage('isDark') is not string `"true"` ->  isDark.value is false
+  isDark.value = isDarkStored;
+  updateBodyClass(isDarkStored);
 });
 </script>
 

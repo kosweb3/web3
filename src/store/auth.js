@@ -13,6 +13,7 @@ import { auth } from "@/js/firebase";
 
 const authUser = ref();
 const errorUser = ref();
+const loading = ref(true);
 
 export const useStoreAuth = defineStore("storeAuth", () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
         clearNotes();
         // router.replace("/web3/login");
       }
+      loading.value = false;
     });
   };
 

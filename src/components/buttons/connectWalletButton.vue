@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 import { storeToRefs } from "pinia";
 import { useStoreWallet } from "@/store/wallet";

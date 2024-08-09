@@ -1,11 +1,15 @@
-@import "./scss/base.scss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
 @import "./scss/collors.scss";
+@import "./scss/base.scss";
 @import "./scss/animations.scss";
+@import "./scss/grid.scss";
 
 // components
 @import "./scss/components/buttons/connect-wallet-button.scss";
 @import "./scss/navigation.scss";
 @import "./scss/components/form.scss";
+@import "./scss/components/new-notes.scss";
 @import "./scss/components/auth/user-data.scss";
 
 //views
@@ -15,3 +19,4 @@
 @import "./scss/components/views/notes-view.scss";
 
 @import "./scss/components/buttons/web3-button.scss";
+@import "./scss/components/buttons/dark-mode-switcher.scss";

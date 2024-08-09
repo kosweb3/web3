@@ -1,0 +1,25 @@
+.new-notes {
+  &__buttons {
+    display: flex;
+    padding-top: 20px;
+  }
+  .formkit-wrapper {
+    button.formkit-input {
+      text-align: right;
+      button {
+        padding: 3px 10px;
+      }
+      span {
+        cursor: pointer;
+        padding: 3px 10px;
+        border: 2px solid $baseSalatGreen;
+      }
+    }
+  }
+  .formkit-actions {
+    display: none;
+  }
+  button {
+    cursor: pointer;
+  }
+}

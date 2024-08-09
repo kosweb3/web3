@@ -15,6 +15,8 @@
       <router-link v-if="notesLength" :to="`${ghp}/notes`" @click="toggleMenu">
         Notes
       </router-link>
+      <DarkModeSwitcher />
+
       <span class="nav-menu__links-at">@2024</span>
     </div>
   </div>
@@ -26,6 +28,7 @@ import { storeToRefs } from "pinia";
 import { useStoreNav } from "@/store/nav";
 import { useStoreAuth } from "@/store/auth.js";
 import { useStoreNotes } from "@/store/notes.js";
+import DarkModeSwitcher from "../buttons/darkModeSwitcher.vue";
 
 const ghp = ref(import.meta.env.VITE_GHP);
 
