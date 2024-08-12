@@ -35,7 +35,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
   };
 
   const registerUser = (credentials) => {
-    console.log(credentials);
     createUserWithEmailAndPassword(
       auth,
       credentials.email,
@@ -74,5 +73,13 @@ export const useStoreAuth = defineStore("storeAuth", () => {
       });
   };
 
-  return { registerUser, logoutUser, loginUser, initAuth, authUser, errorUser };
+  return {
+    registerUser,
+    logoutUser,
+    loginUser,
+    initAuth,
+    authUser,
+    errorUser,
+    loading,
+  };
 });

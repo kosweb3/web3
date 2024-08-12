@@ -9,8 +9,11 @@
 @import "./scss/components/buttons/connect-wallet-button.scss";
 @import "./scss/navigation.scss";
 @import "./scss/components/form.scss";
-@import "./scss/components/new-notes.scss";
 @import "./scss/components/auth/user-data.scss";
+
+// notes
+@import "./scss/components/notes/note.scss";
+@import "./scss//components/notes/new-note.scss";
 
 //views
 @import "./scss/components/views/home-view.scss";

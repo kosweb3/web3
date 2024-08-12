@@ -5,13 +5,14 @@
   }
   .formkit-wrapper {
     button.formkit-input {
+      border: none;
       text-align: right;
       button {
         padding: 3px 10px;
       }
       span {
         cursor: pointer;
-        padding: 3px 10px;
+        padding: 5px 10px;
         border: 2px solid $baseSalatGreen;
       }
     }

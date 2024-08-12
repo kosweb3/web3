@@ -6,15 +6,17 @@
       <router-link :to="`${ghp}/contact`" @click="toggleMenu">
         Contact with us
       </router-link>
+      <router-link v-if="userAuth" :to="`${ghp}/notes`" @click="toggleMenu">
+        <!-- v-if="notesLength" -->
+        Notes
+      </router-link>
       <span v-if="!userAuth" @click="toggleMenu">
         <router-link :to="`${ghp}/login`"> Login </router-link>
       </span>
       <span v-else @click="toggleMenu">
         <router-link :to="`${ghp}`" @click="logoutUser"> Logout </router-link>
       </span>
-      <router-link v-if="notesLength" :to="`${ghp}/notes`" @click="toggleMenu">
-        Notes
-      </router-link>
+
       <DarkModeSwitcher />
 
       <span class="nav-menu__links-at">@2024</span>

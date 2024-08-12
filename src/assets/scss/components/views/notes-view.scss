@@ -1,15 +1,9 @@
 .notes-view {
   padding: 0 10px;
   gap: 10px;
-  &__container {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 10px;
-    flex-wrap: wrap;
-    @media (min-width: $tablet) {
-      flex-direction: row;
-    }
+  &__title {
+    text-align: center;
+    font-size: 40px;
   }
   &__bottom {
     display: flex;
@@ -18,52 +12,11 @@
     padding: 20px 0;
     gap: 20px;
   }
-  &__card {
-    flex-basis: calc(50% - 8px);
-  }
-  .flex {
+  &__btn {
     display: flex;
-    align-items: center;
+    justify-content: center;
   }
-  img {
-    width: 50px;
-    height: 50px;
-  }
-  .card {
-    padding: 20px 40px;
-    border: 2px solid $black;
-    background-color: $baseSalatGreen;
-  }
-  .card__block {
-    gap: 15px;
-    background-color: $baseSalatGreen;
-    &-text {
-      color: $black;
-      background-color: $baseSalatGreen;
-    }
-    h3 {
-      color: $black;
-      background-color: $baseSalatGreen;
-    }
-  }
-  .card__footer {
-    display: flex;
-    justify-content: space-between;
-    background-color: $baseSalatGreen;
-  }
-  .card__footer--info {
-    font-weight: 100;
-    background-color: $baseSalatGreen;
-  }
-  .card__footer--more {
-    border: 1px solid $black;
-    text-decoration: none;
-    color: $black;
-    padding: 7px 12px;
-    background-color: $baseSalatGreen;
-  }
-  .card__footer--more:hover {
-    background-color: $black;
-    color: #d0fc03;
+  .web3-button {
+    margin: 20px 0;
   }
 }

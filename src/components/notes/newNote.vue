@@ -17,6 +17,14 @@
         placeholder="Enter your content"
         validation="required"
       />
+      <FormKit
+        type="text"
+        label="Additional url"
+        name="data.url"
+        v-model="data.url"
+        placeholder="https://www.example.com..."
+        validation="url"
+      />
       <div class="new-notes__buttons">
         <button @click="closeCreating">Cancel</button>
         <FormKit type="submit" class="test">
@@ -36,19 +44,24 @@ import Web3Button from "../buttons/Web3Button.vue";
 const data = ref({
   title: "",
   content: "",
+  url: "",
 });
 
 const storeNotes = useStoreNotes();
 
+const emit = defineEmits(["closeCreating", "noteAdded"]);
+
 const handleCreateNote = async () => {
   if (data.value.title && data.value.content) {
-    storeNotes.addNote(data.value);
+    const noteId = await storeNotes.addNote(data.value);
+    console.log("noteId", noteId);
     data.value.title = data.value.content = "";
+    emit("noteAdded", noteId);
+
     closeCreating();
   }
 };
 
-const emit = defineEmits(["closeCreating"]);
 const closeCreating = () => {
   emit("closeCreating");
 };

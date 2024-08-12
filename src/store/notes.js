@@ -2,6 +2,7 @@ import { ref } from "vue";
 import {
   doc,
   setDoc,
+  deleteDoc,
   collection,
   onSnapshot,
   query,
@@ -36,11 +37,12 @@ export const useStoreNotes = defineStore("storeNotes", () => {
           id: doc.id,
           title: doc.data().title,
           content: doc.data().content,
-          date: doc.data().date,
+          data: doc.data().data,
+          url: doc.data().url,
         };
         newNote.push(note);
       });
-      notes.value.push(newNote);
+      notes.value = newNote;
       loading.value = false;
     });
   };
@@ -50,15 +52,21 @@ export const useStoreNotes = defineStore("storeNotes", () => {
   };
 
   const addNote = async (newNoteContent) => {
-    let currentDate = new Date().getTime(),
-      id = currentDate.toString();
+    let currentDate = new Date().getTime();
+    let id = currentDate.toString();
 
     await setDoc(doc(notesCollectionQuery, id), {
       title: newNoteContent.title,
       content: newNoteContent.content,
-      data: id,
+      data: currentDate,
+      url: newNoteContent.url,
     });
+    return id;
   };
 
-  return { init, notes, clearNotes, addNote, loading };
+  const deleteNote = async (idNote) => {
+    await deleteDoc(doc(notesCollectionQuery, idNote));
+  };
+
+  return { init, notes, clearNotes, addNote, deleteNote, loading };
 });

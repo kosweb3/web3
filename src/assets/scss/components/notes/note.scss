@@ -1,0 +1,112 @@
+.note {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  flex-wrap: wrap;
+  @media (min-width: $tablet) {
+    flex-direction: row;
+  }
+  &__elem {
+    flex-basis: calc(50% - 8px);
+    position: relative;
+    &.new-note {
+      animation: pulse-animation 2s infinite;
+    }
+    &.fade-out {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  &__content {
+    padding: 20px 40px;
+    border: 2px solid $black;
+    background-color: $baseSalatGreen;
+  }
+  &__block {
+    gap: 15px;
+    background-color: $baseSalatGreen;
+    position: relative;
+    &--text {
+      color: $black;
+      background-color: $baseSalatGreen;
+    }
+    &--title {
+      color: $black;
+      background-color: $baseSalatGreen;
+    }
+    &--time {
+      position: absolute;
+      right: 15px;
+    }
+    &--url {
+      font-size: 12px;
+      color: $black;
+      text-decoration: none;
+    }
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: $baseSalatGreen;
+  }
+  &__footer--info {
+    font-weight: 100;
+    background-color: $baseSalatGreen;
+  }
+  &__footer--more {
+    border: 1px solid $black;
+    text-decoration: none;
+    color: $black;
+    padding: 7px 12px;
+    background-color: $baseSalatGreen;
+    &:hover {
+      background-color: $black;
+      color: #d0fc03;
+    }
+  }
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: #ffffff;
+      width: 20px;
+      height: 3px;
+      transform: rotate(-45deg);
+      top: 25px;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: #ffffff;
+      width: 20px;
+      height: 3px;
+      transform: rotate(45deg);
+      top: 25px;
+    }
+  }
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+}
+.dark {
+  .note__close {
+    &::after,
+    &::before {
+      background-color: $black;
+    }
+  }
+}
