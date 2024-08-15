@@ -16,6 +16,10 @@
         v-model="credentials.password"
         validation="required"
         placeholder="Enter your pasword"
+        prefix-icon="password"
+        suffix-icon="eyeClosed"
+        @suffix-icon-click="handleIconClick"
+        suffix-icon-class="hover:text-blue-500"
       />
     </FormKit>
     <div v-if="errorUser">{{ errorUser }}</div>
@@ -28,7 +32,7 @@ import { storeToRefs } from "pinia";
 import { useStoreAuth } from "@/store/auth.js";
 
 const store = useStoreAuth();
-const { registerUser, logoutUser, loginUser } = store;
+const { registerUser, loginUser } = store;
 const { authUser, errorUser } = storeToRefs(store);
 
 const props = defineProps({
@@ -49,6 +53,11 @@ const onSubmit = () => {
   } else {
     loginUser(credentials);
   }
+};
+
+const handleIconClick = (node, e) => {
+  node.props.suffixIcon = node.props.suffixIcon === "eye" ? "eyeClosed" : "eye";
+  node.props.type = node.props.type === "password" ? "text" : "password";
 };
 </script>
 

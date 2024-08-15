@@ -1,6 +1,17 @@
 <template>
   <div class="notes-view">
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading"><Loader /></div>
+
+    <!-- if packege not selected -->
+    <div v-else-if="!maxNotesFromPackage" class="notes-view__title">
+      <p class="notes-view__title--additional">
+        Please select your package first
+      </p>
+      <router-link :to="`${ghp}/packages`">
+        <Web3Button>Select your package </Web3Button>
+      </router-link>
+    </div>
+    <!-- if packege selected but notes are empty -->
     <div
       v-else-if="!notesItems.length && !acceptNewNotes"
       class="notes-view__title"
@@ -9,6 +20,11 @@
     </div>
 
     <template v-else>
+      <h3 class="notes-view__package-info">
+        Max note from your package:
+        {{ maxNotesFromPackage }}
+      </h3>
+
       <Note :notesItems="notesItems" :newNoteId="newNoteId" />
     </template>
     <div v-if="acceptNewNotes" class="notes-view__bottom">
@@ -19,7 +35,12 @@
       />
     </div>
     <div class="notes-view__btn">
-      <Web3Button v-if="!acceptNewNotes" @click="openNewNote">
+      <Web3Button
+        v-if="!acceptNewNotes && maxNotesFromPackage"
+        @click="openNewNote"
+        :disabled="checkDisabledButton"
+        :title="`In your package you have max ${maxNotesFromPackage} notes. Please upgrade your package to add more.`"
+      >
         Add New Note
       </Web3Button>
     </div>
@@ -30,9 +51,13 @@
 import { ref, computed, watch, nextTick } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
+import { useStorePackage } from "@/store/package.js";
 import Note from "../components/notes/Note.vue";
 import NewNote from "../components/notes/newNote.vue";
 import Web3Button from "../components/buttons/Web3Button.vue";
+import Loader from "@/components/loader.vue";
+
+const ghp = ref(import.meta.env.VITE_GHP);
 
 const acceptNewNotes = ref(false);
 const newNoteId = ref(null);
@@ -40,10 +65,18 @@ const newNoteRef = ref(null);
 
 //store Notes
 const storeNotes = useStoreNotes();
-const { notes, loading } = storeToRefs(storeNotes);
+const { notes, loading, maxNotes } = storeToRefs(storeNotes);
+
+//store package
+const store = useStorePackage();
+const { maxNotesFromPackage } = storeToRefs(store);
 
 const notesItems = computed(() => {
   return notes.value;
+});
+
+const checkDisabledButton = computed(() => {
+  return notesItems.value.length >= maxNotesFromPackage.value;
 });
 
 const closeCreating = () => {
@@ -65,7 +98,6 @@ const scrollToForm = () => {
 };
 
 const openNewNote = async () => {
-  console.log("test");
   acceptNewNotes.value = true;
   await nextTick(); // Wait for the DOM to update
   scrollToForm();

@@ -3,6 +3,7 @@ import Home from "@/views/Home.vue";
 import Contact from "@/views/Contact.vue";
 import Login from "@/views/Auth.vue";
 import Notes from "@/views/Notes.vue";
+import Packages from "@/views/Packages.vue";
 import { storeToRefs } from "pinia";
 import { useStoreAuth } from "@/store/auth.js";
 
@@ -13,6 +14,11 @@ const routes = [
     path: `${GHP}`,
     name: "Home",
     component: Home,
+  },
+  {
+    path: `${GHP}/packages`,
+    name: "Packages",
+    component: Packages,
   },
   {
     path: `${GHP}/contact`,

@@ -39,6 +39,7 @@ export const useStoreNotes = defineStore("storeNotes", () => {
           content: doc.data().content,
           data: doc.data().data,
           url: doc.data().url,
+          // packageId: doc.data().packageId,
         };
         newNote.push(note);
       });
@@ -68,5 +69,12 @@ export const useStoreNotes = defineStore("storeNotes", () => {
     await deleteDoc(doc(notesCollectionQuery, idNote));
   };
 
-  return { init, notes, clearNotes, addNote, deleteNote, loading };
+  return {
+    init,
+    notes,
+    clearNotes,
+    addNote,
+    deleteNote,
+    loading,
+  };
 });

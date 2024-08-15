@@ -7,21 +7,26 @@
   font-size: 12px;
   list-style-type: none;
 }
+.formkit-inner {
+  position: relative;
+}
 .formkit-input {
   width: 100%;
-  min-width: 250px;
-  padding: 5px;
+  min-width: 170px;
+  padding: 10px 0 10px 30px;
 }
 button.formkit-input {
   background-color: transparent;
-  border: none;
+  color: $baseSalatGreen;
+  padding: 10px 15px;
 }
 .formkit-actions .formkit-wrapper {
   width: 100%;
-  text-align: right;
+  // text-align: right;
   margin-top: 15px;
   .formkit-input {
-    width: 100px;
+    min-width: 50%;
+    width: 50%;
     cursor: pointer;
   }
 }
@@ -38,4 +43,20 @@ button.formkit-input {
       color: $white;
     }
   }
+}
+
+.formkit-prefix-icon {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  width: 15px;
+  transform: translateY(-50%);
+}
+.formkit-suffix-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  width: 15px;
+  transform: translateY(-50%);
 }

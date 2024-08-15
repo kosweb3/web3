@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,11 +8,12 @@ import {
 } from "firebase/auth";
 import { useRouter } from "vue-router";
 import { useStoreNotes } from "@/store/notes.js";
+import { useStorePackage } from "@/store/package.js";
 
 import { auth } from "@/js/firebase";
 
-const authUser = ref();
-const errorUser = ref();
+const authUser = ref("");
+const errorUser = ref("");
 const loading = ref(true);
 
 export const useStoreAuth = defineStore("storeAuth", () => {
@@ -21,13 +22,19 @@ export const useStoreAuth = defineStore("storeAuth", () => {
   const initAuth = () => {
     const storeNotes = useStoreNotes();
     const { init, clearNotes } = storeNotes;
+
+    const storePackage = useStorePackage();
+    const { getUserPackageId, clearSelectedPackage } = storePackage;
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         authUser.value = user;
         init();
+        getUserPackageId();
       } else {
         authUser.value = "";
         clearNotes();
+        clearSelectedPackage();
         // router.replace("/web3/login");
       }
       loading.value = false;
@@ -56,7 +63,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
   const logoutUser = () => {
     signOut(auth)
       .then(() => {
-        authUser.value = "";
+        authUser.value ?? "";
       })
       .catch(() => {
         console.log("logout error");

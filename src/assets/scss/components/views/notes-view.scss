@@ -1,9 +1,17 @@
 .notes-view {
   padding: 0 10px;
   gap: 10px;
+  &__package-info {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 40px;
+  }
   &__title {
     text-align: center;
     font-size: 40px;
+    &--additional {
+      margin-bottom: 0;
+    }
   }
   &__bottom {
     display: flex;
@@ -18,5 +26,9 @@
   }
   .web3-button {
     margin: 20px 0;
+  }
+  button:disabled {
+    cursor: no-drop;
+    opacity: 0.5;
   }
 }

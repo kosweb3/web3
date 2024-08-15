@@ -54,7 +54,6 @@ const emit = defineEmits(["closeCreating", "noteAdded"]);
 const handleCreateNote = async () => {
   if (data.value.title && data.value.content) {
     const noteId = await storeNotes.addNote(data.value);
-    console.log("noteId", noteId);
     data.value.title = data.value.content = "";
     emit("noteAdded", noteId);
 
