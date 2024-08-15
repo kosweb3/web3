@@ -13,7 +13,7 @@ import { db } from "@/js/firebase";
 import { useStoreAuth } from "@/store/auth.js";
 
 const notes = ref([]);
-const loading = ref(false);
+const loadingNotes = ref(false);
 
 let notesCollectionRef;
 let notesCollectionQuery;
@@ -29,7 +29,7 @@ export const useStoreNotes = defineStore("storeNotes", () => {
   };
 
   const getNotes = async () => {
-    loading.value = true;
+    loadingNotes.value = true;
     onSnapshot(notesCollectionQuery, (querySnapshot) => {
       let newNote = [];
       querySnapshot.forEach((doc) => {
@@ -44,7 +44,7 @@ export const useStoreNotes = defineStore("storeNotes", () => {
         newNote.push(note);
       });
       notes.value = newNote;
-      loading.value = false;
+      loadingNotes.value = false;
     });
   };
 
@@ -75,6 +75,6 @@ export const useStoreNotes = defineStore("storeNotes", () => {
     clearNotes,
     addNote,
     deleteNote,
-    loading,
+    loadingNotes,
   };
 });

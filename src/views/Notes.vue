@@ -1,6 +1,6 @@
 <template>
   <div class="notes-view">
-    <div v-if="loading"><Loader /></div>
+    <div v-if="loadingNotes"><Loader /></div>
 
     <!-- if packege not selected -->
     <div v-else-if="!maxNotesFromPackage" class="notes-view__title">
@@ -65,7 +65,7 @@ const newNoteRef = ref(null);
 
 //store Notes
 const storeNotes = useStoreNotes();
-const { notes, loading, maxNotes } = storeToRefs(storeNotes);
+const { notes, loadingNotes, maxNotes } = storeToRefs(storeNotes);
 
 //store package
 const store = useStorePackage();

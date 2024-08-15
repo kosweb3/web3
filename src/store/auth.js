@@ -9,20 +9,22 @@ import {
 import { useRouter } from "vue-router";
 import { useStoreNotes } from "@/store/notes.js";
 import { useStorePackage } from "@/store/package.js";
+import { useBaseStore } from "@/store/base.js";
 
 import { auth } from "@/js/firebase";
 
 const authUser = ref("");
 const errorUser = ref("");
-const loading = ref(true);
 
 export const useStoreAuth = defineStore("storeAuth", () => {
   const router = useRouter();
 
   const initAuth = () => {
+    // store to get notes from user
     const storeNotes = useStoreNotes();
     const { init, clearNotes } = storeNotes;
 
+    // store to select Package from user
     const storePackage = useStorePackage();
     const { getUserPackageId, clearSelectedPackage } = storePackage;
 
@@ -37,7 +39,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
         clearSelectedPackage();
         // router.replace("/web3/login");
       }
-      loading.value = false;
     });
   };
 
@@ -71,12 +72,20 @@ export const useStoreAuth = defineStore("storeAuth", () => {
   };
 
   const loginUser = (credentials) => {
+    // baseStore
+    const baseStore = useBaseStore();
+    const { loader } = storeToRefs(baseStore);
+    loader.value = true;
+
     signInWithEmailAndPassword(auth, credentials.email, credentials.password)
       .then((userCredential) => {
         router.push("/web3");
       })
       .catch((error) => {
         errorUser.value = "User not found...";
+      })
+      .finally(() => {
+        loader.value = false;
       });
   };
 
@@ -87,6 +96,5 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     initAuth,
     authUser,
     errorUser,
-    loading,
   };
 });

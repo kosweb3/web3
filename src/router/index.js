@@ -61,7 +61,7 @@ const router = createRouter({
 // router.beforeEach(async (to, from, next) => {
 // Отримайте доступ до вашого Pinia store
 // const storeAuth = useStoreAuth();
-// const { authUser, loading } = storeToRefs(storeAuth);
+// const { authUser} = storeToRefs(storeAuth);
 
 // Важливо: використовуйте Promise.all для отримання даних
 // await Promise.all([authUser]);
