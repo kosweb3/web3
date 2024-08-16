@@ -2,7 +2,7 @@
   <div>
     <Loader v-if="loadingPackage" />
     <Packages />
-    <Basket v-if="selectedPackageObject" :item="selectedPackageObject" />
+    <Basket v-if="selectedPackageObject.id" :item="selectedPackageObject" />
   </div>
 </template>
 
