@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ hidden: menuVisible }">
     <Nav />
     <router-view :class="{ blur: menuVisible }" />
     <Loader v-if="loader" />

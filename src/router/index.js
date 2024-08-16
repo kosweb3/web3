@@ -4,6 +4,8 @@ import Contact from "@/views/Contact.vue";
 import Login from "@/views/Auth.vue";
 import Notes from "@/views/Notes.vue";
 import Packages from "@/views/Packages.vue";
+import SuccessPaymentView from "@/views/payment/SuccessPaymentView.vue";
+import CancelPaymentView from "@/views/payment/CancelPaymentView.vue";
 import { storeToRefs } from "pinia";
 import { useStoreAuth } from "@/store/auth.js";
 
@@ -40,6 +42,16 @@ const routes = [
   {
     path: "/:pathMatch(.*)*",
     redirect: GHP, // Redirect on home page
+  },
+  {
+    path: `${GHP}/success-payment`,
+    name: "success",
+    component: SuccessPaymentView,
+  },
+  {
+    path: `${GHP}/cancel-payment`,
+    name: "cancel",
+    component: CancelPaymentView,
   },
 ];
 

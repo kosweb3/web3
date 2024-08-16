@@ -19,11 +19,15 @@
 // package
 @import "./scss//components/package/packages.scss";
 
+// payment
+@import "./scss//components/payment/basket.scss";
+
 //views
 @import "./scss/components/views/home-view.scss";
 @import "./scss/components/views/contact-view.scss";
 @import "./scss/components/views/auth-view.scss";
 @import "./scss/components/views/notes-view.scss";
+@import "./scss/components/views/success-payment-view.scss";
 
 @import "./scss/components/buttons/web3-button.scss";
 @import "./scss/components/buttons/dark-mode-switcher.scss";
