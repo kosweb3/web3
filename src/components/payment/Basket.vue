@@ -1,5 +1,5 @@
 <template>
-  <div class="basket-container">
+  <div class="basket-container" v-if="item">
     <div>{{ item.name }}</div>
     <div>
       <div>{{ item.price }}</div>
