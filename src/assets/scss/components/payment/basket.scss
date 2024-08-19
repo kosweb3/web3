@@ -1,6 +1,56 @@
 .basket-container {
-  position: absolute;
-  bottom: 50px;
-  right: 100px;
+  position: fixed;
+  bottom: 20px;
+  right: 0;
   transition: right 2s ease;
+  background-color: $baseSalatGreen;
+  color: $black;
+  border-radius: 20px 0 0 20px;
+  padding: 2px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  @media (min-width: $tablet) {
+    bottom: 50px;
+    padding: 10px;
+  }
+  &__trash {
+    background-color: transparent;
+    padding: 0 5px 0 5px;
+    @media (min-width: $tablet) {
+      padding: 0 15px 0 5px;
+    }
+    &--btn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    &--img {
+      width: 25px;
+      height: 25px;
+      @media (min-width: $tablet) {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
+  &__price {
+    font-weight: 900;
+    font-size: 22px;
+    color: $black;
+    @media (min-width: $tablet) {
+      font-size: 27px;
+    }
+  }
+  &__pay {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding-left: 0;
+    img {
+      max-width: 80px;
+    }
+  }
 }

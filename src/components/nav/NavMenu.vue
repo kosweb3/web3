@@ -12,7 +12,7 @@
       <router-link v-if="userAuth" :to="`${ghp}/notes`" @click="toggleMenu">
         <!-- v-if="notesLength" -->
         Notes
-        <span v-if="maxNotesFromPackage">
+        <span v-if="maxNotesFromPackage && selectedPackageStoreId">
           {{ notesLength }}/{{ maxNotesFromPackage }}
         </span>
       </router-link>
@@ -57,7 +57,8 @@ const { notes } = storeToRefs(storeNotes);
 
 //store package
 const storePackage = useStorePackage();
-const { maxNotesFromPackage } = storeToRefs(storePackage);
+const { maxNotesFromPackage, selectedPackageStoreId } =
+  storeToRefs(storePackage);
 
 const userAuth = computed(() => {
   return authUser.value?.uid;

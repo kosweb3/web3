@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "@/views/Home.vue";
-import Contact from "@/views/Contact.vue";
-import Login from "@/views/Auth.vue";
-import Notes from "@/views/Notes.vue";
-import Packages from "@/views/Packages.vue";
+import Home from "@/views/HomeView.vue";
+import Contact from "@/views/ContactView.vue";
+import Login from "@/views/AuthView.vue";
+import Notes from "@/views/NotesView.vue";
+import Packages from "@/views/PackagesView.vue";
 import SuccessPaymentView from "@/views/payment/SuccessPaymentView.vue";
 import CancelPaymentView from "@/views/payment/CancelPaymentView.vue";
 import { storeToRefs } from "pinia";

@@ -3,7 +3,7 @@
     <div v-if="loadingNotes"><Loader /></div>
 
     <!-- if packege not selected -->
-    <div v-else-if="!maxNotesFromPackage" class="notes-view__title">
+    <div v-else-if="!selectedPackageStoreId" class="notes-view__title">
       <p class="notes-view__title--additional">
         Please select your package first
       </p>
@@ -11,7 +11,7 @@
         <Web3Button>Select your package </Web3Button>
       </router-link>
     </div>
-    <!-- if packege selected but notes are empty -->
+    <!-- if package selected but notes are empty -->
     <div
       v-else-if="!notesItems.length && !acceptNewNotes"
       class="notes-view__title"
@@ -36,7 +36,7 @@
     </div>
     <div class="notes-view__btn">
       <Web3Button
-        v-if="!acceptNewNotes && maxNotesFromPackage"
+        v-if="!acceptNewNotes && selectedPackageStoreId"
         @click="openNewNote"
         :disabled="checkDisabledButton"
         :title="`In your package you have max ${maxNotesFromPackage} notes. Please upgrade your package to add more.`"
@@ -69,7 +69,7 @@ const { notes, loadingNotes, maxNotes } = storeToRefs(storeNotes);
 
 //store package
 const store = useStorePackage();
-const { maxNotesFromPackage } = storeToRefs(store);
+const { maxNotesFromPackage, selectedPackageStoreId } = storeToRefs(store);
 
 const notesItems = computed(() => {
   return notes.value;

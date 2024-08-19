@@ -1,8 +1,17 @@
 import { ref } from "vue";
 import { db } from "@/js/firebase";
-import { doc, setDoc, collection, query, onSnapshot } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDocs,
+  deleteDoc,
+  collection,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
 import { defineStore, storeToRefs } from "pinia";
 import { useStoreAuth } from "@/store/auth.js";
+import { useStoreNotes } from "@/store/notes.js";
 
 const selectedPackageStoreId = ref({});
 const maxNotesFromPackage = ref(0);
@@ -38,14 +47,24 @@ export const useStorePackage = defineStore("storePackage", () => {
     const storeAuth = useStoreAuth();
     const { authUser } = storeToRefs(storeAuth);
 
-    let notesCollectionRef = collection(db, "users", authUser.value?.uid, "id");
-    let notesCollectionQuery = query(notesCollectionRef);
+    //store Notes
+    const storeNotes = useStoreNotes();
+    const { init } = storeNotes;
+
+    let packagesCollectionRef = collection(
+      db,
+      "users",
+      authUser.value?.uid,
+      "id"
+    );
+    let packageCollectionQuery = query(packagesCollectionRef);
 
     let currentDate = new Date().getTime();
     let id = currentDate.toString();
-    await setDoc(doc(notesCollectionQuery, id), {
+    await setDoc(doc(packageCollectionQuery, id), {
       id: idP,
     });
+    init();
     loadingPackage.value = false;
   };
 
@@ -54,22 +73,22 @@ export const useStorePackage = defineStore("storePackage", () => {
     const storeAuth = useStoreAuth();
     const { authUser } = storeToRefs(storeAuth);
 
-    const notesCollectionRef = collection(
+    const packagesCollectionRef = collection(
       db,
       "users",
       authUser.value?.uid,
       "id"
     );
-    onSnapshot(notesCollectionRef, (querySnapshot) => {
-      let newNote = [];
+    onSnapshot(packagesCollectionRef, (querySnapshot) => {
+      let newPackage = [];
       querySnapshot.forEach((doc) => {
-        let note = {
+        let packageItem = {
           id: doc.id,
           idP: doc.data().id,
         };
-        newNote.push(note);
+        newPackage.push(packageItem);
       });
-      selectedPackageStoreId.value = newNote[newNote.length - 1];
+      selectedPackageStoreId.value = newPackage[newPackage.length - 1];
       // check selected package user and update max notes
       if (selectedPackageStoreId.value?.idP === 0) {
         selectedPackageObject.value = packages.value[0];
@@ -86,7 +105,39 @@ export const useStorePackage = defineStore("storePackage", () => {
   };
 
   const clearSelectedPackage = () => {
-    selectedPackageStoreId.value = maxNotesFromPackage.value = "";
+    selectedPackageStoreId.value = "";
+    maxNotesFromPackage.value = "";
+    selectedPackageObject.value = "";
+  };
+
+  const deleteSelectedPackage = async () => {
+    const storeAuth = useStoreAuth();
+    const { authUser } = storeToRefs(storeAuth);
+
+    //store Notes
+    const storeNotes = useStoreNotes();
+    const { notes } = storeToRefs(storeNotes);
+
+    let packagesCollectionRef = collection(
+      db,
+      "users",
+      authUser.value?.uid,
+      "id"
+    );
+
+    // Get all documents in the collection
+    const querySnapshot = await getDocs(packagesCollectionRef);
+
+    // Delete each document in the collection
+    const deletePromises = querySnapshot.docs.map((docSnapshot) => {
+      return deleteDoc(
+        doc(db, "users", authUser.value.uid, "id", docSnapshot.id)
+      );
+    });
+    notes.value = [];
+
+    // Wait for all deletions to complete
+    await Promise.all(deletePromises);
   };
 
   return {
@@ -98,5 +149,6 @@ export const useStorePackage = defineStore("storePackage", () => {
     selectedPackageObject,
     packages,
     loadingPackage,
+    deleteSelectedPackage,
   };
 });

@@ -1,18 +1,43 @@
 <template>
   <div class="basket-container">
-    <div>{{ item.name }}</div>
-    <div>
-      <div>{{ item.price }}</div>
-      <button @click="handlePayment(item.stripePriceID)" :disabled="!stripe">
-        Buy with Stripe
+    <div class="basket-container__trash">
+      <button
+        @click="deleteSelectedPackage"
+        title="Remove selected package"
+        class="basket-container__trash--btn"
+      >
+        <img
+          src="../../assets/img/svg/basket.svg"
+          class="basket-container__trash--img"
+        />
       </button>
+    </div>
+    <div class="basket-container__content">
+      <div>{{ item.name }}</div>
+      <div>
+        <button
+          @click="handlePayment(item.stripePriceID)"
+          :disabled="!stripe"
+          class="basket-container__pay"
+        >
+          <div class="basket-container__price">{{ item.price }}</div>
+          <img src="../../assets/img/stripe-logo.png" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
 import { loadStripe } from "@stripe/stripe-js";
+import { useStorePackage } from "@/store/package.js";
+
+// store to select Package from user
+const storePackage = useStorePackage();
+const { selectedPackageStoreId } = storeToRefs(storePackage);
+const { deleteSelectedPackage } = storePackage;
 
 const props = defineProps({
   item: {
