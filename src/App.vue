@@ -15,7 +15,6 @@ import Loader from "@/components/loader.vue";
 import { storeToRefs } from "pinia";
 import { useStoreNav } from "@/store/nav";
 import { useStoreAuth } from "@/store/auth.js";
-import { useStoreNotes } from "@/store/notes.js";
 import { useStoreMode } from "@/store/mode.js";
 import { useBaseStore } from "@/store/base.js";
 
@@ -27,13 +26,9 @@ const { initAuth } = storeAuth;
 const store = useStoreNav();
 const { menuVisible } = storeToRefs(store);
 
-//store Notes
-const storeNotes = useStoreNotes();
-const { init } = storeNotes;
-
 //store Mode
 const storeMode = useStoreMode();
-const { toggleDark, updateBodyClass } = storeMode;
+const { updateBodyClass } = storeMode;
 const { isDark } = storeToRefs(storeMode);
 
 // baseStore
