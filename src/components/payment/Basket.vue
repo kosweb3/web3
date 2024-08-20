@@ -54,7 +54,7 @@ const handlePayment = async (priceID) => {
     lineItems: [{ price: priceID, quantity: 1 }],
     mode: "payment",
     successUrl:
-      "http://localhost:5173/web3/success-payment?session_id={CHECKOUT_SESSION_ID}",
+      "https://kosweb3.github.io/web3/success-payment?session_id={CHECKOUT_SESSION_ID}",
     cancelUrl: "http://localhost:5173/web3/cancel-payment",
   });
 };
