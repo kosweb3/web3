@@ -6,7 +6,9 @@
   align-items: center;
   &__tabs {
     display: flex;
+    justify-content: center;
     gap: 20px;
+    padding: 0;
   }
   &__tab {
     list-style-type: none;

@@ -9,6 +9,7 @@
           v-model="data.name"
           placeholder="Enter your name"
           validation="required"
+          prefix-icon="people"
         />
         <FormKit
           type="email"
@@ -18,6 +19,7 @@
           validation="required|email"
           :placeholder="loggedUserPlaceholder"
           :readonly="isLogedUser"
+          prefix-icon="email"
         />
 
         <FormKit
@@ -27,6 +29,7 @@
           v-model="data.text"
           validation="required"
           placeholder="How can we help you?"
+          prefix-icon="submit"
         />
       </FormKit>
     </div>

@@ -8,6 +8,7 @@
         v-model="credentials.email"
         validation="required|email"
         placeholder="youremail@gmail.com"
+        prefix-icon="email"
       />
       <FormKit
         type="password"

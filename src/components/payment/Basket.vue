@@ -53,7 +53,8 @@ const handlePayment = async (priceID) => {
   stripe.value.redirectToCheckout({
     lineItems: [{ price: priceID, quantity: 1 }],
     mode: "payment",
-    successUrl: "http://localhost:5173/web3/success-payment",
+    successUrl:
+      "http://localhost:5173/web3/success-payment?session_id={CHECKOUT_SESSION_ID}",
     cancelUrl: "http://localhost:5173/web3/cancel-payment",
   });
 };

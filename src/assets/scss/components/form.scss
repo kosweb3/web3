@@ -9,11 +9,12 @@
 }
 .formkit-inner {
   position: relative;
+  display: flex;
 }
 .formkit-input {
   width: 100%;
   min-width: 170px;
-  padding: 10px 0 10px 30px;
+  padding: 10px 10px 10px 30px;
 }
 button.formkit-input {
   background-color: transparent;
@@ -49,14 +50,16 @@ button.formkit-input {
   position: absolute;
   left: 5px;
   top: 50%;
-  width: 15px;
+  width: 20px;
+  height: 20px;
   transform: translateY(-50%);
 }
 .formkit-suffix-icon {
   cursor: pointer;
   position: absolute;
   top: 50%;
-  right: -15px;
-  width: 15px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
   transform: translateY(-50%);
 }
