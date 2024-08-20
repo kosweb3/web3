@@ -1,0 +1,48 @@
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(25, 25, 25, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  &-container {
+    position: relative;
+    padding: 20px 20px 10px 20px;
+    border-radius: 5px;
+    border: 2px solid $white;
+    max-width: 250px;
+    @media (min-width: $tablet) {
+      max-width: 100%;
+    }
+  }
+  &-btn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    button {
+      cursor: pointer;
+      padding: 10px 15px;
+      background: $error;
+      border: none;
+      border-radius: 5px;
+      font-weight: 700;
+      &:last-child {
+        background-color: $baseSalatGreen;
+        color: $black;
+      }
+    }
+  }
+  &-content {
+    padding: 10px 40px 10px 10px;
+  }
+  .close-btn {
+    background-color: transparent;
+    border: none;
+  }
+}

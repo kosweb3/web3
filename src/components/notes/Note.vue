@@ -35,18 +35,35 @@
       <div
         class="note__close"
         title="Delete note"
-        @click="deleteNote(item.id)"
+        @click="openModal(item)"
       ></div>
     </div>
+    <modal v-if="modalVisible" v-model="modalVisible">
+      <template #content>Are you sure to delete this note?</template>
+      <template #subcontent>{{ subContent }}</template>
+      <template #btn>
+        <button @click="closeModal">Cancel</button>
+        <button @click="confirmDelete">Confirm</button>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script setup>
-import { useUtils } from "../../composables/useUtils";
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
+import { useBaseStore } from "@/store/base.js";
+import { useUtils } from "@/composables/useUtils";
+import modal from "../modal.vue";
 
+// Notes Store
 const storeNotes = useStoreNotes();
 const { deleteNote } = storeNotes;
+
+// baseStore
+const baseStore = useBaseStore();
+const { modalVisible } = storeToRefs(baseStore);
 
 const props = defineProps({
   notesItems: {
@@ -59,7 +76,25 @@ const props = defineProps({
   },
 });
 
+const selectedNoteId = ref(null);
+const subContent = ref("");
+
 const { formatDate } = useUtils();
+
+const openModal = (item) => {
+  selectedNoteId.value = item.id;
+  subContent.value = item.title;
+  modalVisible.value = true;
+};
+
+const closeModal = () => {
+  modalVisible.value = false;
+};
+
+const confirmDelete = () => {
+  deleteNote(selectedNoteId.value);
+  modalVisible.value = false;
+};
 </script>
 
 <style lang="scss" scoped></style>

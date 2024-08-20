@@ -26,9 +26,10 @@
         validation="url"
       />
       <div class="new-notes__buttons">
-        <button @click="closeCreating">Cancel</button>
-        <FormKit type="submit" class="test">
-          <span>Create New Note</span>
+        <button @click="closeCreating" :disabled="loader">Cancel</button>
+        <FormKit type="submit">
+          <span v-if="!loader">Create New Note</span>
+          <Loader v-else />
         </FormKit>
       </div>
     </FormKit>
@@ -39,7 +40,13 @@
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
+import { useBaseStore } from "@/store/base.js";
 import Web3Button from "../buttons/Web3Button.vue";
+import Loader from "../loader.vue";
+
+// baseStore
+const baseStore = useBaseStore();
+const { loader } = storeToRefs(baseStore);
 
 const data = ref({
   title: "",
@@ -48,16 +55,22 @@ const data = ref({
 });
 
 const storeNotes = useStoreNotes();
-
 const emit = defineEmits(["closeCreating", "noteAdded"]);
 
 const handleCreateNote = async () => {
   if (data.value.title && data.value.content) {
-    const noteId = await storeNotes.addNote(data.value);
-    data.value.title = data.value.content = "";
-    emit("noteAdded", noteId);
+    loader.value = true;
+    try {
+      const noteId = await storeNotes.addNote(data.value);
+      data.value.title = data.value.content = "";
+      emit("noteAdded", noteId);
 
-    closeCreating();
+      closeCreating();
+    } catch (error) {
+      console.error("Error creating note:", error);
+    } finally {
+      loader.value = false;
+    }
   }
 };
 

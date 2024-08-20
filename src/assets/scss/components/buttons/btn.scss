@@ -1,0 +1,32 @@
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (min-width: 992px) {
+    top: 30px;
+    right: 40px;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    background-color: $white;
+    width: 30px;
+    height: 3px;
+    transform: rotate(-45deg);
+    top: 25px;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    background-color: $white;
+    width: 30px;
+    height: 3px;
+    transform: rotate(45deg);
+    top: 25px;
+  }
+}
