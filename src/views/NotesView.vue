@@ -1,10 +1,10 @@
 <template>
   <div class="notes-view">
     <div v-if="loadingNotes"><Loader /></div>
-
     <div v-else>
+      checkAmountInDb {{ checkAmountInDb }}
       <!-- if packege not selected -->
-      <div v-if="!selectedPackageStoreId" class="notes-view__title">
+      <div v-if="!checkAmountInDb" class="notes-view__title">
         <p class="notes-view__title--additional">
           Please select your package first
         </p>
@@ -37,7 +37,7 @@
       </div>
       <div class="notes-view__btn">
         <Web3Button
-          v-if="!acceptNewNotes && selectedPackageStoreId"
+          v-if="!acceptNewNotes && checkAmountInDb"
           @click="openNewNote"
           :disabled="checkDisabledButton"
           :title="`In your package you have max ${maxNotesFromPackage} notes. Please upgrade your package to add more.`"
@@ -54,6 +54,7 @@ import { ref, computed, watch, nextTick } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
 import { useStorePackage } from "@/store/package.js";
+import { useStorePayment } from "@/store/payment.js";
 import Note from "../components/notes/Note.vue";
 import NewNote from "../components/notes/newNote.vue";
 import Web3Button from "../components/buttons/Web3Button.vue";
@@ -73,6 +74,10 @@ const { notes, loadingNotes, maxNotes } = storeToRefs(storeNotes);
 const store = useStorePackage();
 const { maxNotesFromPackage, selectedPackageStoreId } = storeToRefs(store);
 
+// paymentStore
+const paymentStore = useStorePayment();
+const { amountFromDb } = storeToRefs(paymentStore);
+
 const notesItems = computed(() => {
   return notes.value;
 });
@@ -84,6 +89,10 @@ const checkDisabledButton = computed(() => {
 const closeCreating = () => {
   acceptNewNotes.value = false;
 };
+
+const checkAmountInDb = computed(() => {
+  return amountFromDb.value.amount ?? false;
+});
 
 const handleNoteAdded = (noteId) => {
   newNoteId.value = noteId;

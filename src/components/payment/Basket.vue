@@ -29,15 +29,19 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, nextTick } from "vue";
 import { storeToRefs } from "pinia";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStorePackage } from "@/store/package.js";
+import { useStoreAuth } from "@/store/auth.js";
 
 // store to select Package from user
 const storePackage = useStorePackage();
 const { selectedPackageStoreId } = storeToRefs(storePackage);
 const { deleteSelectedPackage } = storePackage;
+
+const storeAuth = useStoreAuth();
+const { authUser } = storeToRefs(storeAuth);
 
 const props = defineProps({
   item: {
@@ -46,15 +50,14 @@ const props = defineProps({
   },
 });
 
-// Initialization Stripe
 const stripe = ref(null);
 
 const handlePayment = async (priceID) => {
+  const token = await authUser.value.getIdToken(true); // Отримуємо токен користувача
   stripe.value.redirectToCheckout({
     lineItems: [{ price: priceID, quantity: 1 }],
     mode: "payment",
-    successUrl:
-      "https://kosweb3.github.io/web3/success-payment?session_id={CHECKOUT_SESSION_ID}",
+    successUrl: `http://localhost:5173/web3/success-payment?token=${token}`, // Передача токена в URL
     cancelUrl: "http://localhost:5173/web3/cancel-payment",
   });
 };

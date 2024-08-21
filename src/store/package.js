@@ -12,6 +12,7 @@ import {
 import { defineStore, storeToRefs } from "pinia";
 import { useStoreAuth } from "@/store/auth.js";
 import { useStoreNotes } from "@/store/notes.js";
+import { useStorePayment } from "@/store/payment.js";
 
 const selectedPackageStoreId = ref({});
 const maxNotesFromPackage = ref(0);
@@ -73,6 +74,10 @@ export const useStorePackage = defineStore("storePackage", () => {
     const storeAuth = useStoreAuth();
     const { authUser } = storeToRefs(storeAuth);
 
+    // paymentStore
+    const paymentStore = useStorePayment();
+    const { amountFromDb } = storeToRefs(paymentStore);
+
     const packagesCollectionRef = collection(
       db,
       "users",
@@ -88,17 +93,30 @@ export const useStorePackage = defineStore("storePackage", () => {
         };
         newPackage.push(packageItem);
       });
-      selectedPackageStoreId.value = newPackage[newPackage.length - 1];
       // check selected package user and update max notes
-      if (selectedPackageStoreId.value?.idP === 0) {
-        selectedPackageObject.value = packages.value[0];
-        maxNotesFromPackage.value = 5;
-      } else if (selectedPackageStoreId.value?.idP === 1) {
-        selectedPackageObject.value = packages.value[1];
-        maxNotesFromPackage.value = 10;
-      } else if (selectedPackageStoreId.value?.idP === 2) {
-        selectedPackageObject.value = packages.value[2];
-        maxNotesFromPackage.value = 20;
+      if (amountFromDb.value?.amount) {
+        if (amountFromDb.value?.amount === 100) {
+          selectedPackageStoreId.value = packages.value[0];
+          maxNotesFromPackage.value = 5;
+        } else if (amountFromDb.value?.amount === 200) {
+          selectedPackageStoreId.value = packages.value[1];
+          maxNotesFromPackage.value = 10;
+        } else if (amountFromDb.value?.amount === 300) {
+          selectedPackageStoreId.value = packages.value[2];
+          maxNotesFromPackage.value = 20;
+        }
+      } else {
+        selectedPackageStoreId.value = newPackage[newPackage.length - 1];
+        if (selectedPackageStoreId.value?.idP === 0) {
+          selectedPackageObject.value = packages.value[0];
+          maxNotesFromPackage.value = 5;
+        } else if (selectedPackageStoreId.value?.idP === 1) {
+          selectedPackageObject.value = packages.value[1];
+          maxNotesFromPackage.value = 10;
+        } else if (selectedPackageStoreId.value?.idP === 2) {
+          selectedPackageObject.value = packages.value[2];
+          maxNotesFromPackage.value = 20;
+        }
       }
       loadingPackage.value = false;
     });

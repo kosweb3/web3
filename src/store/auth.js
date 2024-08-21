@@ -10,6 +10,7 @@ import { useRouter } from "vue-router";
 import { useStoreNotes } from "@/store/notes.js";
 import { useStorePackage } from "@/store/package.js";
 import { useBaseStore } from "@/store/base.js";
+import { useStorePayment } from "@/store/payment.js";
 
 import { auth } from "@/js/firebase";
 
@@ -28,10 +29,15 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     const storePackage = useStorePackage();
     const { getUserPackageId, clearSelectedPackage } = storePackage;
 
+    // check payment amount from
+    const storePayment = useStorePayment();
+    const { getUserSelectedAmount } = storePayment;
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         authUser.value = user;
         init();
+        getUserSelectedAmount();
         getUserPackageId();
       } else {
         authUser.value = "";

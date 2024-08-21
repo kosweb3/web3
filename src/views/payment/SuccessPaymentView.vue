@@ -9,32 +9,54 @@
         <Web3Button>To home page</Web3Button>
       </router-link>
     </div>
-    payment {{ payment }}
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
+import { storeToRefs } from "pinia";
 import { loadStripe } from "@stripe/stripe-js";
+import { useStoreAuth } from "@/store/auth.js";
 import Web3Button from "@/components/buttons/Web3Button.vue";
+
+// auth store for check id user
+const storeAuth = useStoreAuth();
+const { initAuth } = storeAuth;
+const { authUser } = storeToRefs(storeAuth);
 
 const ghp = ref(import.meta.env.VITE_GHP);
 
-const payment = ref({});
+const paymentStatus = ref(null);
+
+// get token from URL
+function getTokenFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("token");
+}
 
 onMounted(async () => {
-  const session_id = new URLSearchParams(window.location.search).get(
-    "session_id"
-  );
-  console.log("Session ID:", session_id);
+  const token = getTokenFromUrl();
+  if (token) {
+    const response = await fetch("http://localhost:8888/api/record-payment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Передаємо токен на сервер
+      },
+      body: JSON.stringify({
+        currency: "usd",
+        paymentStatus: "succeeded",
+        sessionId: "sessionId",
+      }),
+    });
+    console.log("response", response.body);
 
-  if (session_id) {
-    const response = await fetch(`/session/${session_id}`);
-    if (response.ok) {
-      payment.value = await response.json();
-    } else {
-      console.error("Session not found");
+    if (!response.ok) {
+      console.error("Failed to send request to server");
+      return;
     }
+  } else {
+    console.error("Token not found in URL");
   }
 });
 </script>

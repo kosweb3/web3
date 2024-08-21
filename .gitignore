@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+/config/firebase-service-account.json
+/src/js/firebase.js

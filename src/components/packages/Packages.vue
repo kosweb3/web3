@@ -4,7 +4,7 @@
       <div
         :class="[
           'packages__item',
-          { active: selectedPackageStoreId?.idP === index },
+          { active: activePacketBasedPayment === index },
         ]"
         v-for="(item, index) in packages"
         :key="index"
@@ -29,13 +29,28 @@
 import { ref, computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useStorePackage } from "@/store/package.js";
+import { useStorePayment } from "@/store/payment.js";
 
 //store package
 const store = useStorePackage();
 const { selectedPackage, getpackageId } = store;
 const { packages, selectedPackageStoreId } = storeToRefs(store);
 
+// paymentStore
+const paymentStore = useStorePayment();
+const { amountFromDb } = storeToRefs(paymentStore);
+
 const activePackage = ref(0);
+
+const activePacketBasedPayment = computed(() =>
+  amountFromDb.value.amount === 100
+    ? 0
+    : amountFromDb.value.amount === 200
+    ? 1
+    : amountFromDb.value.amount === 300
+    ? 2
+    : selectedPackageStoreId.value.idP
+);
 
 const selectedItem = (index, item) => {
   activePackage.value = index;
