@@ -49,7 +49,6 @@ onMounted(async () => {
         sessionId: "sessionId",
       }),
     });
-    console.log("response", response.body);
 
     if (!response.ok) {
       console.error("Failed to send request to server");

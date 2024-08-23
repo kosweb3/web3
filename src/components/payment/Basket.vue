@@ -35,11 +35,12 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useStorePackage } from "@/store/package.js";
 import { useStoreAuth } from "@/store/auth.js";
 
-// store to select Package from user
+// package store
 const storePackage = useStorePackage();
-const { selectedPackageStoreId } = storeToRefs(storePackage);
+const { selectedPackageObject } = storeToRefs(storePackage);
 const { deleteSelectedPackage } = storePackage;
 
+// auth store
 const storeAuth = useStoreAuth();
 const { authUser } = storeToRefs(storeAuth);
 
@@ -53,11 +54,12 @@ const props = defineProps({
 const stripe = ref(null);
 
 const handlePayment = async (priceID) => {
-  const token = await authUser.value.getIdToken(true); // Отримуємо токен користувача
+  // Get user token from firebase, true refresh token
+  const token = await authUser.value.getIdToken(true);
   stripe.value.redirectToCheckout({
     lineItems: [{ price: priceID, quantity: 1 }],
     mode: "payment",
-    successUrl: `http://localhost:5173/web3/success-payment?token=${token}`, // Передача токена в URL
+    successUrl: `http://localhost:5173/web3/success-payment?token=${token}`,
     cancelUrl: "http://localhost:5173/web3/cancel-payment",
   });
 };

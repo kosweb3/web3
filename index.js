@@ -40,8 +40,8 @@ app.post(
         const session = event.data.object;
         const amount = session?.amount_total;
         amountValue = amount;
-        console.log("amountValue", amountValue);
 
+        console.log("amountValue", amountValue);
         console.log("Payment information saved to Firestore");
       }
       response.json({ received: true });
@@ -85,21 +85,6 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
     res.status(500).send(`Server Error: ${err.message}`);
   }
 });
-
-// for payment_intent.succeeded event in webhook
-// switch (event.type) {
-//   case "payment_intent.succeeded":
-//     const paymentIntent = event.data.object;
-//     console.log(`paymentIntent was successful!`, paymentIntent);
-//     break;
-//   case "payment_intent.attached":
-//     const paymentMethod = event.data.object;
-//     console.log(`paymentMethod was attached to a customer!`, paymentMethod);
-//     break;
-//   default:
-//     console.log(`Unhandled event type: ${event.type}`);
-// }
-
 app.use(express.json());
 
 app.listen(8888, () => console.log("Running on port 8888"));

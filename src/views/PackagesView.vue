@@ -3,7 +3,7 @@
     <Loader v-if="loadingPackage" />
     <Packages />
     <Basket
-      v-if="selectedPackageStoreId && !checkAmountFromDb"
+      v-if="selectedPackageObject && !checkAmountFromDb"
       :item="selectedPackageObject"
     />
   </div>
@@ -20,8 +20,7 @@ import Loader from "@/components/loader.vue";
 
 // packageStore
 const store = useStorePackage();
-const { selectedPackageObject, loadingPackage, selectedPackageStoreId } =
-  storeToRefs(store);
+const { loadingPackage, selectedPackageObject } = storeToRefs(store);
 
 // paymentStore
 const paymentStore = useStorePayment();

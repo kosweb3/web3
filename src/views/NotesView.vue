@@ -2,7 +2,6 @@
   <div class="notes-view">
     <div v-if="loadingNotes"><Loader /></div>
     <div v-else>
-      checkAmountInDb {{ checkAmountInDb }}
       <!-- if packege not selected -->
       <div v-if="!checkAmountInDb" class="notes-view__title">
         <p class="notes-view__title--additional">
@@ -72,7 +71,7 @@ const { notes, loadingNotes, maxNotes } = storeToRefs(storeNotes);
 
 //store package
 const store = useStorePackage();
-const { maxNotesFromPackage, selectedPackageStoreId } = storeToRefs(store);
+const { maxNotesFromPackage, selectedPackageObject } = storeToRefs(store);
 
 // paymentStore
 const paymentStore = useStorePayment();
