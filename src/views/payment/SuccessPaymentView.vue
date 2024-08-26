@@ -5,7 +5,7 @@
     <div class="firework"></div>
     <div class="firework"></div>
     <div class="success-payment-view__button">
-      <router-link :to="`${ghp}`">
+      <router-link to="/">
         <Web3Button>To home page</Web3Button>
       </router-link>
     </div>
@@ -24,8 +24,6 @@ const storeAuth = useStoreAuth();
 const { initAuth } = storeAuth;
 const { authUser } = storeToRefs(storeAuth);
 
-const ghp = ref(import.meta.env.VITE_GHP);
-
 const paymentStatus = ref(null);
 
 // get token from URL
@@ -37,18 +35,21 @@ function getTokenFromUrl() {
 onMounted(async () => {
   const token = getTokenFromUrl();
   if (token) {
-    const response = await fetch("http://localhost:8888/api/record-payment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Передаємо токен на сервер
-      },
-      body: JSON.stringify({
-        currency: "usd",
-        paymentStatus: "succeeded",
-        sessionId: "sessionId",
-      }),
-    });
+    const response = await fetch(
+      "http://13.48.148.109:8888/api/record-payment",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Передаємо токен на сервер
+        },
+        body: JSON.stringify({
+          currency: "usd",
+          paymentStatus: "succeeded",
+          sessionId: "sessionId",
+        }),
+      }
+    );
 
     if (!response.ok) {
       console.error("Failed to send request to server");

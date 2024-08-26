@@ -9,47 +9,45 @@ import CancelPaymentView from "@/views/payment/CancelPaymentView.vue";
 import { storeToRefs } from "pinia";
 import { useStoreAuth } from "@/store/auth.js";
 
-const GHP = import.meta.env.VITE_GHP;
-
 const routes = [
   {
-    path: `${GHP}`,
+    path: ``,
     name: "Home",
     component: Home,
   },
   {
-    path: `${GHP}/packages`,
+    path: `/packages`,
     name: "Packages",
     component: Packages,
   },
   {
-    path: `${GHP}/contact`,
+    path: `/contact`,
     name: "contact",
     component: Contact,
   },
   {
-    path: `${GHP}/login`,
+    path: `/login`,
     name: "login",
     component: Login,
     meta: { requiresGuest: true },
   },
   {
-    path: `${GHP}/notes`,
+    path: `/notes`,
     name: "notes",
     component: Notes,
     meta: { requiresAuth: true }, // Додайте мета-поле для захищених маршруті
   },
   {
     path: "/:pathMatch(.*)*",
-    redirect: GHP, // Redirect on home page
+    redirect: "/", // Redirect on home page
   },
   {
-    path: `${GHP}/success-payment`,
+    path: `/success-payment`,
     name: "success",
     component: SuccessPaymentView,
   },
   {
-    path: `${GHP}/cancel-payment`,
+    path: `/cancel-payment`,
     name: "cancel",
     component: CancelPaymentView,
   },
@@ -66,7 +64,7 @@ const router = createRouter({
 //   const storeAuth = useStoreAuth();
 //   const { authUser } = storeToRefs(storeAuth);
 
-//   if (to.meta.requiresAuth && !authUser.value) return "${GHP}/login`";
+//   if (to.meta.requiresAuth && !authUser.value) return "/login`";
 // });
 
 // Глобальний охоронець маршруту
@@ -79,7 +77,7 @@ const router = createRouter({
 // await Promise.all([authUser]);
 // if (to.meta.requiresAuth && !authUser.value) {
 //   console.log("якщо користувач не авторизований");
-//   next(`${GHP}/login`);
+//   next(`/login`);
 // } else {
 //   console.log("якщо авторизований");
 //   next();

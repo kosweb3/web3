@@ -37,7 +37,7 @@
       <span>Thanks for interesting with Web3 World!</span><br />
       <span>Our team will contact you soon.</span>
       <div class="contact-page__thx--button">
-        <router-link :to="`${ghp}`">
+        <router-link to="/">
           <Web3Button>To home page</Web3Button>
         </router-link>
       </div>
@@ -52,8 +52,6 @@ import { useStoreAuth } from "@/store/auth.js";
 import { useBaseStore } from "@/store/base.js";
 import emailjs from "@emailjs/browser";
 import Web3Button from "@/components/buttons/Web3Button.vue";
-
-const ghp = ref(import.meta.env.VITE_GHP);
 
 const sended = ref(false);
 const data = ref({

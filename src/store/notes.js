@@ -30,22 +30,28 @@ export const useStoreNotes = defineStore("storeNotes", () => {
 
   const getNotes = async () => {
     loadingNotes.value = true;
-    onSnapshot(notesCollectionQuery, (querySnapshot) => {
-      let newNote = [];
-      querySnapshot.forEach((doc) => {
-        let note = {
-          id: doc.id,
-          title: doc.data().title,
-          content: doc.data().content,
-          data: doc.data().data,
-          url: doc.data().url,
-          // packageId: doc.data().packageId,
-        };
-        newNote.push(note);
-      });
-      notes.value = newNote;
-      loadingNotes.value = false;
-    });
+    onSnapshot(
+      notesCollectionQuery,
+      (querySnapshot) => {
+        let newNote = [];
+        querySnapshot.forEach((doc) => {
+          let note = {
+            id: doc.id,
+            title: doc.data().title,
+            content: doc.data().content,
+            data: doc.data().data,
+            url: doc.data().url,
+            // packageId: doc.data().packageId,
+          };
+          newNote.push(note);
+        });
+        notes.value = newNote;
+        loadingNotes.value = false;
+      },
+      (error) => {
+        console.log(error.message);
+      }
+    );
   };
 
   const clearNotes = () => {

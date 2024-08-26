@@ -19,7 +19,7 @@ dotenv.config();
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 app.get("/", (req, res) => {
-  res.send("Hello, this is the root page!");
+  res.send("Hello, this is the root page! 12");
 });
 let amountValue = "";
 app.post(
@@ -40,9 +40,6 @@ app.post(
         const session = event.data.object;
         const amount = session?.amount_total;
         amountValue = amount;
-
-        console.log("amountValue", amountValue);
-        console.log("Payment information saved to Firestore");
       }
       response.json({ received: true });
     } catch (err) {
@@ -87,4 +84,4 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
 });
 app.use(express.json());
 
-app.listen(8888, () => console.log("Running on port 8888"));
+app.listen(8888, () => console.log("Running on port 8888 12"));

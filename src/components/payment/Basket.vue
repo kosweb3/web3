@@ -17,7 +17,7 @@
       <div>
         <button
           @click="handlePayment(item.stripePriceID)"
-          :disabled="!stripe"
+          :disabled="!stripe || loader.value"
           class="basket-container__pay"
         >
           <div class="basket-container__price">{{ item.price }}</div>
@@ -34,6 +34,7 @@ import { storeToRefs } from "pinia";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStorePackage } from "@/store/package.js";
 import { useStoreAuth } from "@/store/auth.js";
+import { useBaseStore } from "@/store/base.js";
 
 // package store
 const storePackage = useStorePackage();
@@ -43,6 +44,10 @@ const { deleteSelectedPackage } = storePackage;
 // auth store
 const storeAuth = useStoreAuth();
 const { authUser } = storeToRefs(storeAuth);
+
+// baseStore
+const baseStore = useBaseStore();
+const { loader } = storeToRefs(baseStore);
 
 const props = defineProps({
   item: {
@@ -54,14 +59,22 @@ const props = defineProps({
 const stripe = ref(null);
 
 const handlePayment = async (priceID) => {
-  // Get user token from firebase, true refresh token
-  const token = await authUser.value.getIdToken(true);
-  stripe.value.redirectToCheckout({
-    lineItems: [{ price: priceID, quantity: 1 }],
-    mode: "payment",
-    successUrl: `http://localhost:5173/web3/success-payment?token=${token}`,
-    cancelUrl: "http://localhost:5173/web3/cancel-payment",
-  });
+  try {
+    loader.value = true;
+    // Get user token from firebase, true refresh token
+    const token = await authUser.value.getIdToken(true);
+    stripe.value.redirectToCheckout({
+      lineItems: [{ price: priceID, quantity: 1 }],
+      mode: "payment",
+      successUrl: `http://kosweb3-2024.s3-website.eu-north-1.amazonaws.com/success-payment?token=${token}`,
+      cancelUrl:
+        "http://kosweb3-2024.s3-website.eu-north-1.amazonaws.com/cancel-payment",
+    });
+  } catch (error) {
+    console.error("Payment error:", error);
+  } finally {
+    loader.value = false;
+  }
 };
 
 onMounted(async () => {

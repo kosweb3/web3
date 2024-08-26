@@ -55,7 +55,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
       credentials.password
     )
       .then((userCredential) => {
-        router.push("/web3");
+        router.push("/");
         // const user = userCredential.user;
       })
       .catch((error) => {
@@ -85,7 +85,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
 
     signInWithEmailAndPassword(auth, credentials.email, credentials.password)
       .then((userCredential) => {
-        router.push("/web3");
+        router.push("/");
       })
       .catch((error) => {
         errorUser.value = "User not found...";

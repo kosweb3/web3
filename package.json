@@ -33,10 +33,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.77.8",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
-    "vue-tsc": "^2.0.24"
+    "vue-tsc": "^2.0.24",
+    "webpack-bundle-analyzer": "^4.10.2"
   },
   "description": "# Web3 Project",
   "main": "index.js",

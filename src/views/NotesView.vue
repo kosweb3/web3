@@ -7,7 +7,7 @@
         <p class="notes-view__title--additional">
           Please select your package first
         </p>
-        <router-link :to="`${ghp}/packages`">
+        <router-link to="/packages">
           <Web3Button>Select your package </Web3Button>
         </router-link>
       </div>
@@ -58,8 +58,6 @@ import Note from "../components/notes/Note.vue";
 import NewNote from "../components/notes/newNote.vue";
 import Web3Button from "../components/buttons/Web3Button.vue";
 import Loader from "@/components/loader.vue";
-
-const ghp = ref(import.meta.env.VITE_GHP);
 
 const acceptNewNotes = ref(false);
 const newNoteId = ref(null);
