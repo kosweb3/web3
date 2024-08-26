@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 *.pem
 *.end
+*.gitignore
 
 
 /config/firebase-service-account.json
