@@ -13,12 +13,13 @@
   z-index: 999;
   &-container {
     position: relative;
-    padding: 20px 20px 10px 20px;
+    padding: 10px;
     border-radius: 5px;
     border: 2px solid $white;
     max-width: 250px;
     @media (min-width: $tablet) {
       max-width: 100%;
+      padding: 20px 20px 10px 20px;
     }
   }
   &-btn {
@@ -39,10 +40,19 @@
     }
   }
   &-content {
-    padding: 10px 40px 10px 10px;
+    padding: 5px;
+    @media (min-width: $tablet) {
+      padding: 10px 40px 10px 10px;
+    }
   }
   .close-btn {
     background-color: transparent;
     border: none;
+    top: -5px;
+    right: -5px;
+    @media (min-width: $tablet) {
+      top: 5px;
+      right: 5px;
+    }
   }
 }

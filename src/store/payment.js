@@ -33,7 +33,7 @@ export const useStorePayment = defineStore("storePayment", () => {
       querySnapshot.forEach((doc) => {
         let packageItem = {
           id: doc.id,
-          amount: doc.data().amount_total,
+          amount: doc.data().customer_amount,
         };
         arr = packageItem;
       });

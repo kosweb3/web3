@@ -19,9 +19,10 @@ dotenv.config();
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 app.get("/", (req, res) => {
-  res.send("Hello, this is the root page! 12");
+  res.send("Hello, this is the root page! 13");
 });
-let amountValue = "";
+let customerDetailsEmail = "";
+let customerDetailsAmount = "";
 app.post(
   "/stripe/webhook",
   express.raw({ type: "application/json" }),
@@ -38,8 +39,8 @@ app.post(
 
       if (event?.type === "checkout.session.completed") {
         const session = event.data.object;
-        const amount = session?.amount_total;
-        amountValue = amount;
+        customerDetailsEmail = session?.customer_details?.email;
+        customerDetailsAmount = session?.amount_total;
       }
       response.json({ received: true });
     } catch (err) {
@@ -61,16 +62,17 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(authToken);
     const uid = decodedToken.uid; // get uid user
 
-    const { currency, paymentStatus, sessionId } = req.body;
+    const { currency, paymentStatus, tokenUser } = req.body;
 
     const docRef = db
       .collection("users")
       .doc(uid)
       .collection("payments")
-      .doc(sessionId);
+      .doc(tokenUser);
 
     await docRef.set({
-      amount_total: amountValue,
+      customer_amount: customerDetailsAmount,
+      customer_email: customerDetailsEmail,
       currency: currency,
       payment_status: paymentStatus,
       created_at: admin.firestore.FieldValue.serverTimestamp(),
@@ -84,4 +86,4 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
 });
 app.use(express.json());
 
-app.listen(8888, () => console.log("Running on port 8888 12"));
+app.listen(8888, () => console.log("Running on port 8888 13"));

@@ -36,7 +36,7 @@ onMounted(async () => {
   const token = getTokenFromUrl();
   if (token) {
     const response = await fetch(
-      "http://13.48.148.109:8888/api/record-payment",
+      "http://13.60.205.66:8888/api/record-payment",
       {
         method: "POST",
         headers: {
@@ -46,7 +46,7 @@ onMounted(async () => {
         body: JSON.stringify({
           currency: "usd",
           paymentStatus: "succeeded",
-          sessionId: "sessionId",
+          tokenUser: token,
         }),
       }
     );
