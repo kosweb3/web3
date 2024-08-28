@@ -14,7 +14,7 @@ import { db } from "@/js/firebase";
 import { useStoreAuth } from "@/store/auth.js";
 
 const notes = ref([]);
-const loadingNotes = ref(false);
+const loadingNotes = ref(true);
 
 let notesCollectionRef;
 let notesCollectionQuery;
@@ -30,7 +30,6 @@ export const useStoreNotes = defineStore("storeNotes", () => {
   };
 
   const getNotes = async () => {
-    loadingNotes.value = true;
     onSnapshot(
       notesCollectionQuery,
       (querySnapshot) => {
@@ -77,8 +76,6 @@ export const useStoreNotes = defineStore("storeNotes", () => {
   };
 
   const updateNote = async (id, content, title, url) => {
-    console.log("id", id);
-    console.log("content", content);
     await updateDoc(doc(notesCollectionQuery, id), {
       title,
       content,
