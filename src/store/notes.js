@@ -3,6 +3,7 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  updateDoc,
   collection,
   onSnapshot,
   query,
@@ -75,6 +76,16 @@ export const useStoreNotes = defineStore("storeNotes", () => {
     await deleteDoc(doc(notesCollectionQuery, idNote));
   };
 
+  const updateNote = async (id, content, title, url) => {
+    console.log("id", id);
+    console.log("content", content);
+    await updateDoc(doc(notesCollectionQuery, id), {
+      title,
+      content,
+      url,
+    });
+  };
+
   return {
     init,
     notes,
@@ -82,5 +93,6 @@ export const useStoreNotes = defineStore("storeNotes", () => {
     addNote,
     deleteNote,
     loadingNotes,
+    updateNote,
   };
 });

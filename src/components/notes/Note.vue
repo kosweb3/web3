@@ -13,6 +13,7 @@
       <div class="note__content">
         <div class="flex note__block">
           <img
+            class="note__logo"
             src="https://sh.web3.career/assets/img/web3-companies/metana.jpg"
           />
           <h3 class="note__block--title">{{ item.title }}</h3>
@@ -32,30 +33,40 @@
           {{ item.url }}
         </a>
       </div>
-      <div
-        class="note__close"
-        title="Delete note"
-        @click="openModal(item)"
-      ></div>
+      <div class="note__menu-content" ref="menu">
+        <div @click.stop="toggleActionsMenu(item)">
+          <span
+            v-if="item.id === selectedNote?.id && noteActionsVisible"
+            class="note__close"
+          ></span>
+          <img
+            v-else
+            src="../../assets/img/svg/settings.svg"
+            class="note__menu-icon"
+          />
+        </div>
+        <Transition>
+          <div
+            class="note__actions"
+            v-if="item.id === selectedNote?.id && noteActionsVisible"
+          >
+            <div class="note__menu">
+              <ActionsNote :selectedNote="selectedNote" />
+            </div>
+          </div>
+        </Transition>
+      </div>
     </div>
-    <modal v-if="modalVisible" v-model="modalVisible">
-      <template #content>Are you sure to delete this note?</template>
-      <template #subcontent>{{ subContent }}</template>
-      <template #btn>
-        <button @click="closeModal">Cancel</button>
-        <button @click="confirmDelete">Confirm</button>
-      </template>
-    </modal>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
 import { useBaseStore } from "@/store/base.js";
 import { useUtils } from "@/composables/useUtils";
-import modal from "../modal.vue";
+import ActionsNote from "./actionsNote.vue";
 
 // Notes Store
 const storeNotes = useStoreNotes();
@@ -76,25 +87,36 @@ const props = defineProps({
   },
 });
 
-const selectedNoteId = ref(null);
-const subContent = ref("");
+const selectedNote = ref(null);
+const noteActionsVisible = ref(false);
 
 const { formatDate } = useUtils();
 
-const openModal = (item) => {
-  selectedNoteId.value = item.id;
-  subContent.value = item.title;
-  modalVisible.value = true;
+const toggleActionsMenu = (item) => {
+  if (selectedNote.value?.id === item.id) {
+    noteActionsVisible.value = !noteActionsVisible.value;
+    selectedNote.value = null;
+  } else {
+    selectedNote.value = item;
+    noteActionsVisible.value = true;
+    modalVisible.value = false;
+  }
 };
 
-const closeModal = () => {
-  modalVisible.value = false;
+const handleClickOutside = (event) => {
+  if (selectedNote.value && !event.target.closest(".note__menu-content")) {
+    noteActionsVisible.value = false;
+    selectedNote.value = null;
+  }
 };
 
-const confirmDelete = () => {
-  deleteNote(selectedNoteId.value);
-  modalVisible.value = false;
-};
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <style lang="scss" scoped></style>
