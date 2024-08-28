@@ -17,7 +17,12 @@
             src="https://sh.web3.career/assets/img/web3-companies/metana.jpg"
           />
           <h3 class="note__block--title">{{ item.title }}</h3>
-          <span class="note__block--time">{{ formatDate(item.data) }}</span>
+          <div class="note__block--time">
+            <span> {{ formatDate(item.data) }}</span>
+            <span v-if="item.editDate" class="note__block--time-edit">
+              Edit date: {{ formatDate(item.editDate) }}
+            </span>
+          </div>
         </div>
         <p class="note__block--text">{{ item.content }}</p>
         <div class="flex note__footer">

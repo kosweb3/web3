@@ -41,6 +41,7 @@ export const useStoreNotes = defineStore("storeNotes", () => {
             content: doc.data().content,
             data: doc.data().data,
             url: doc.data().url,
+            editDate: doc.data().editDate,
             // packageId: doc.data().packageId,
           };
           newNote.push(note);
@@ -67,6 +68,7 @@ export const useStoreNotes = defineStore("storeNotes", () => {
       content: newNoteContent.content,
       data: currentDate,
       url: newNoteContent.url,
+      editDate: "",
     });
     return id;
   };
@@ -83,12 +85,14 @@ export const useStoreNotes = defineStore("storeNotes", () => {
   };
 
   const updateNote = async (id, content, title, url) => {
+    let currentDate = new Date().getTime();
     loadingNotes.value = true;
     try {
       await updateDoc(doc(notesCollectionQuery, id), {
         title,
         content,
         url,
+        editDate: currentDate,
       });
     } catch (error) {
       console.log(error.message);

@@ -91,12 +91,18 @@ const confirmDelete = () => {
 };
 
 const confirmUpdateNote = () => {
-  updateNote(
-    props.selectedNote?.id,
-    editContent.value,
-    editTitle.value,
-    editUrl.value
-  );
+  if (
+    props.selectedNote.title != editTitle.value ||
+    props.selectedNote.content != editContent.value ||
+    props.selectedNote.url != editUrl.value
+  ) {
+    updateNote(
+      props.selectedNote?.id,
+      editContent.value,
+      editTitle.value,
+      editUrl.value
+    );
+  }
   modalVisible.value = false;
 };
 </script>
