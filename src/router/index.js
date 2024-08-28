@@ -6,8 +6,12 @@ import Notes from "@/views/NotesView.vue";
 import Packages from "@/views/PackagesView.vue";
 import SuccessPaymentView from "@/views/payment/SuccessPaymentView.vue";
 import CancelPaymentView from "@/views/payment/CancelPaymentView.vue";
+// store
 import { storeToRefs } from "pinia";
 import { useStoreAuth } from "@/store/auth.js";
+
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../js/firebase";
 
 const routes = [
   {
@@ -58,4 +62,35 @@ const router = createRouter({
   routes,
 });
 
+// check for authentication
+router.beforeEach((to, from, next) => {
+  const storeAuth = useStoreAuth();
+  const { authUser } = storeToRefs(storeAuth);
+
+  // If user already login
+  if (authUser.value) {
+    if (to.meta.requiresGuest) {
+      next({ name: "Home" });
+    } else {
+      next();
+    }
+  } else {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        authUser.value = user; // Update state
+        if (to.meta.requiresGuest) {
+          next({ name: "Home" });
+        } else {
+          next();
+        }
+      } else {
+        if (to.meta.requiresAuth) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    });
+  }
+});
 export default router;
