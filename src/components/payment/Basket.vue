@@ -64,7 +64,7 @@ const checkUrl = computed(() => {
     return "https://main.d1ophk345xo11r.amplifyapp.com";
   }
   if (window.location.href.includes("amazonaws")) {
-    return "https://kosweb3-2024.s3.eu-north-1.amazonaws.com";
+    return "http://kosweb3-2024.s3.eu-north-1.amazonaws.com";
   }
 });
 
