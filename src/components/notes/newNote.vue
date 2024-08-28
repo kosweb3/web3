@@ -8,6 +8,7 @@
         v-model="data.title"
         placeholder="Enter your title"
         validation="required"
+        prefix-icon="text"
       />
       <FormKit
         type="text"
@@ -16,6 +17,7 @@
         v-model="data.content"
         placeholder="Enter your content"
         validation="required"
+        prefix-icon="textarea"
       />
       <FormKit
         type="text"
@@ -24,6 +26,7 @@
         v-model="data.url"
         placeholder="https://www.example.com..."
         validation="url"
+        prefix-icon="link"
       />
       <div class="new-notes__buttons">
         <button @click="closeCreating" :disabled="loader">Cancel</button>
