@@ -35,11 +35,11 @@ const routes = [
     path: `/notes`,
     name: "notes",
     component: Notes,
-    meta: { requiresAuth: true }, // Додайте мета-поле для захищених маршруті
+    meta: { requiresAuth: true },
   },
   {
     path: "/:pathMatch(.*)*",
-    redirect: "/", // Redirect on home page
+    redirect: "/",
   },
   {
     path: `/success-payment`,
@@ -57,31 +57,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
-// router.beforeEach((to) => {
-// ✅ This will work because the router starts its navigation after
-// the router is installed and pinia will be installed too
-//   const storeAuth = useStoreAuth();
-//   const { authUser } = storeToRefs(storeAuth);
-
-//   if (to.meta.requiresAuth && !authUser.value) return "/login`";
-// });
-
-// Глобальний охоронець маршруту
-// router.beforeEach(async (to, from, next) => {
-// Отримайте доступ до вашого Pinia store
-// const storeAuth = useStoreAuth();
-// const { authUser} = storeToRefs(storeAuth);
-
-// Важливо: використовуйте Promise.all для отримання даних
-// await Promise.all([authUser]);
-// if (to.meta.requiresAuth && !authUser.value) {
-//   console.log("якщо користувач не авторизований");
-//   next(`/login`);
-// } else {
-//   console.log("якщо авторизований");
-//   next();
-// }
-// });
 
 export default router;
