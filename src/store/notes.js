@@ -72,15 +72,29 @@ export const useStoreNotes = defineStore("storeNotes", () => {
   };
 
   const deleteNote = async (idNote) => {
-    await deleteDoc(doc(notesCollectionQuery, idNote));
+    loadingNotes.value = true;
+    try {
+      await deleteDoc(doc(notesCollectionQuery, idNote));
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      loadingNotes.value = false;
+    }
   };
 
   const updateNote = async (id, content, title, url) => {
-    await updateDoc(doc(notesCollectionQuery, id), {
-      title,
-      content,
-      url,
-    });
+    loadingNotes.value = true;
+    try {
+      await updateDoc(doc(notesCollectionQuery, id), {
+        title,
+        content,
+        url,
+      });
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      loadingNotes.value = false;
+    }
   };
 
   return {
