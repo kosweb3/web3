@@ -56,6 +56,18 @@ const props = defineProps({
   },
 });
 
+const checkUrl = computed(() => {
+  if (window.location.href.includes("localhost")) {
+    return "localhost:5173";
+  }
+  if (window.location.href.includes("amplify")) {
+    return "https://main.d1ophk345xo11r.amplifyapp.com/";
+  }
+  if (window.location.href.includes("amazonaws")) {
+    return "https://kosweb3-2024.s3.eu-north-1.amazonaws.com/";
+  }
+});
+
 const stripe = ref(null);
 
 const handlePayment = async (priceID) => {
@@ -66,9 +78,8 @@ const handlePayment = async (priceID) => {
     stripe.value.redirectToCheckout({
       lineItems: [{ price: priceID, quantity: 1 }],
       mode: "payment",
-      successUrl: `http://kosweb3-2024.s3-website.eu-north-1.amazonaws.com/success-payment?token=${token}`,
-      cancelUrl:
-        "http://kosweb3-2024.s3-website.eu-north-1.amazonaws.com/cancel-payment",
+      successUrl: `${checkUrl}/success-payment?token=${token}`,
+      cancelUrl: `${checkUrl}/cancel-payment`,
     });
   } catch (error) {
     console.error("Payment error:", error);
@@ -78,6 +89,7 @@ const handlePayment = async (priceID) => {
 };
 
 onMounted(async () => {
+  console.log("checkUrl", checkUrl.value);
   stripe.value = await loadStripe(import.meta.env.VITE_STRIPE_KEY);
 });
 </script>
