@@ -14,6 +14,7 @@
 </template>
 
 <script setup>
+import { onMounted, onBeforeUnmount } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNav } from "@/store/nav";
 import { useStoreAuth } from "@/store/auth.js";
@@ -32,6 +33,25 @@ const { menuVisible } = storeToRefs(store);
 const storeAuth = useStoreAuth();
 const { logoutUser } = storeAuth;
 const { authUser } = storeToRefs(storeAuth);
+
+const handleClickOutside = (event) => {
+  // if menu is open and clickable element is not .nav-burger-menu__item && .nav-menu
+  if (
+    menuVisible.value &&
+    !event.target.closest(".nav-burger-menu__item") &&
+    !event.target.closest(".nav-menu")
+  ) {
+    toggleMenu();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <style lang="scss" scoped></style>

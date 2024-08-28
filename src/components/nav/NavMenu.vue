@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNav } from "@/store/nav";
 import { useStoreAuth } from "@/store/auth.js";
