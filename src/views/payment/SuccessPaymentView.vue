@@ -36,7 +36,7 @@ onMounted(async () => {
   const token = getTokenFromUrl();
   if (token) {
     const response = await fetch(
-      "http://13.60.205.66:8888/api/record-payment",
+      "https://kosweb3-01c70ca57756.herokuapp.com/api/record-payment",
       {
         method: "POST",
         headers: {
