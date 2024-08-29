@@ -35,18 +35,21 @@ function getTokenFromUrl() {
 onMounted(async () => {
   const token = getTokenFromUrl();
   if (token) {
-    const response = await fetch("/api/record-payment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Передаємо токен на сервер
-      },
-      body: JSON.stringify({
-        currency: "usd",
-        paymentStatus: "succeeded",
-        tokenUser: token,
-      }),
-    });
+    const response = await fetch(
+      "http://13.60.205.66:8888/api/record-payment",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Передаємо токен на сервер
+        },
+        body: JSON.stringify({
+          currency: "usd",
+          paymentStatus: "succeeded",
+          tokenUser: token,
+        }),
+      }
+    );
 
     if (!response.ok) {
       console.error("Failed to send request to server");

@@ -3,8 +3,26 @@ import cors from "cors";
 import admin from "firebase-admin";
 import Stripe from "stripe";
 import dotenv from "dotenv";
-import serviceAccount from "./config/firebase-service-account.json" assert { type: "json" };
+// import serviceAccount from "./config/firebase-service-account.json" assert { type: "json" };
 
+dotenv.config();
+
+const serviceAccount = {
+  type: "service_account",
+  project_id: "web3-dd175",
+  private_key_id: process.env.VITE_FIREBASE_ACCOUNT_PRIVATE_KEY_ID,
+  private_key: process.env.VITE_FIREBASE_ACCOUNT_PRIVATE_KEY.replace(
+    /\\n/g,
+    "\n"
+  ),
+  client_email: process.env.VITE_FIREBASE_ACCOUNT_CLIENT_EMAIL,
+  client_id: process.env.VITE_FIREBASE_ACCOUNT_CLIENT_ID,
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://oauth2.googleapis.com/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url: process.env.VITE_FIREBASE_ACCOUNT_CLIENT_X509,
+  universe_domain: "googleapis.com",
+};
 // Init Firebase Admin SDK
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -14,12 +32,11 @@ const db = admin.firestore();
 const app = express();
 
 app.use(cors());
-dotenv.config();
 
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 app.get("/", (req, res) => {
-  res.send("Hello, this is the root page! 13");
+  res.send("Hello, this is the root page! new port 8888 test");
 });
 let customerDetailsEmail = "";
 let customerDetailsAmount = "";
