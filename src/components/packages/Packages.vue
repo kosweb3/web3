@@ -90,14 +90,14 @@ const handleDeletePackage = () => {
   selectedPackageObject.value = null;
 };
 const selectedItem = (index, item) => {
-  if (selectedPackageObject.value.id > item.id) {
+  if (amountFromDb.value.length && selectedPackageObject.value.id > item.id) {
     modalLessSelectedPackageVisible.value = true;
   } else if (
     amountFromDb.value.amount &&
     selectedPackageObject.value.id !== index
   ) {
     modalVisible.value = true;
-  } else {
+  } else if (amountFromDb.value.length) {
     startNofification("Package already selected");
   }
   selectedPackage(index);
