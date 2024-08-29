@@ -59,7 +59,13 @@ import modal from "../modal.vue";
 //store package
 const store = useStorePackage();
 const { selectedPackage, getpackageId } = store;
-const { packages, selectedPackageObject } = storeToRefs(store);
+const {
+  packages,
+  selectedPackageObject,
+  packageAmountOne,
+  packageAmountTwo,
+  packageAmountThree,
+} = storeToRefs(store);
 
 // paymentStore
 const paymentStore = useStorePayment();
@@ -75,11 +81,11 @@ const modalLessSelectedPackageVisible = ref(false);
 
 // if amount not found in DB then return last selected package
 const activePacketBasedPayment = computed(() =>
-  amountFromDb.value.amount === 100
+  amountFromDb.value.amount === packageAmountOne.value
     ? 0
-    : amountFromDb.value.amount === 200
+    : amountFromDb.value.amount === packageAmountTwo.value
     ? 1
-    : amountFromDb.value.amount === 300
+    : amountFromDb.value.amount === packageAmountThree.value
     ? 2
     : selectedPackageObject.value?.id
 );

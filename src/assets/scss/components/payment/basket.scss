@@ -42,7 +42,8 @@
       font-size: 27px;
     }
   }
-  &__pay {
+  &__pay,
+  &__crypto-pay {
     display: flex;
     align-items: center;
     background-color: transparent;
@@ -50,7 +51,12 @@
     cursor: pointer;
     padding-left: 0;
     img {
+      width: 80px;
+      height: 38px;
       max-width: 80px;
+    }
+    &:hover {
+      opacity: 0.8;
     }
   }
 }

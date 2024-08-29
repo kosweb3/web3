@@ -20,29 +20,34 @@ const loadingPackage = ref(true);
 const packages = ref([
   {
     name: "Package Easy",
-    price: "1$",
-    stripePriceID: "price_1PoRPHRqf53S8zO6gSmWh23Z",
+    price: "99$",
+    stripePriceID: "price_1Pt8CvRqf53S8zO6n8eqLt8B",
     id: 0,
     benefits: ["5 notes", "1 website", "add more"],
   },
   {
     name: "Package Standart",
-    price: "2$",
-    stripePriceID: "price_1PoRPeRqf53S8zO6J4ZBqylt",
+    price: "199$",
+    stripePriceID: "price_1Pt8DLRqf53S8zO6g9x5PAIY",
     id: 1,
     benefits: ["10 project notes", "2 websites", "add more"],
   },
   {
     name: "Package Pro",
-    price: "3$",
-    stripePriceID: "price_1PoRQ4Rqf53S8zO63arxs2rh",
+    price: "299$",
+    stripePriceID: "price_1Pt8DmRqf53S8zO6LkdGJ9VU",
     id: 2,
     benefits: ["20 project notes", "3 websites", "Support 24/7", "and more"],
   },
 ]);
 
+const packageAmountOne = ref(9900);
+const packageAmountTwo = ref(19900);
+const packageAmountThree = ref(29900);
+
 export const useStorePackage = defineStore("storePackage", () => {
   const selectedPackage = async (idPackage) => {
+    console.log(idPackage);
     loadingPackage.value = true;
     const storeAuth = useStoreAuth();
     const { authUser } = storeToRefs(storeAuth);
@@ -92,18 +97,19 @@ export const useStorePackage = defineStore("storePackage", () => {
         };
         newPackage.push(packageItem);
       });
+
       // check selected package user and update max notes
       if (amountFromDb.value?.amount) {
-        if (amountFromDb.value?.amount === 100) {
+        if (amountFromDb.value?.amount === packageAmountOne.value) {
           // if user payd 100 select [0] elements from packages array
           // add info about max notessions
-          selectedPackageObject.value = packages.value[0];
+          changeSelectedPackage(0);
           maxNotesFromPackage.value = 5;
-        } else if (amountFromDb.value?.amount === 200) {
-          selectedPackageObject.value = packages.value[1];
+        } else if (amountFromDb.value?.amount === packageAmountTwo.value) {
+          changeSelectedPackage(1);
           maxNotesFromPackage.value = 10;
-        } else if (amountFromDb.value?.amount === 300) {
-          selectedPackageObject.value = packages.value[2];
+        } else if (amountFromDb.value?.amount === packageAmountThree.value) {
+          changeSelectedPackage(2);
           maxNotesFromPackage.value = 20;
         }
       } else {
@@ -111,18 +117,22 @@ export const useStorePackage = defineStore("storePackage", () => {
         // show last selected package
         selectedPackageObject.value = newPackage[newPackage.length - 1];
         if (selectedPackageObject.value?.idPackage === 0) {
-          selectedPackageObject.value = packages.value[0];
+          changeSelectedPackage(0);
           maxNotesFromPackage.value = 5;
         } else if (selectedPackageObject.value?.idPackage === 1) {
-          selectedPackageObject.value = packages.value[1];
+          changeSelectedPackage(1);
           maxNotesFromPackage.value = 10;
         } else if (selectedPackageObject.value?.idPackage === 2) {
-          selectedPackageObject.value = packages.value[2];
+          changeSelectedPackage(2);
           maxNotesFromPackage.value = 20;
         }
       }
       loadingPackage.value = false;
     });
+  };
+
+  const changeSelectedPackage = (id) => {
+    return (selectedPackageObject.value = packages.value[id]);
   };
 
   const clearSelectedPackage = () => {
@@ -171,5 +181,8 @@ export const useStorePackage = defineStore("storePackage", () => {
     packages,
     loadingPackage,
     deleteSelectedPackage,
+    packageAmountOne,
+    packageAmountTwo,
+    packageAmountThree,
   };
 });
