@@ -11,10 +11,7 @@ const serviceAccount = {
   type: "service_account",
   project_id: "web3-dd175",
   private_key_id: process.env.VITE_FIREBASE_ACCOUNT_PRIVATE_KEY_ID,
-  private_key: process.env.VITE_FIREBASE_ACCOUNT_PRIVATE_KEY.replace(
-    /\\n/g,
-    "\n"
-  ),
+  private_key: process.env.VITE_FIREBASE_ACCOUNT_PRIVATE_KEY,
   client_email: process.env.VITE_FIREBASE_ACCOUNT_CLIENT_EMAIL,
   client_id: process.env.VITE_FIREBASE_ACCOUNT_CLIENT_ID,
   auth_uri: "https://accounts.google.com/o/oauth2/auth",
@@ -103,4 +100,6 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
 });
 app.use(express.json());
 
-app.listen(8888, () => console.log("Running on port 8888 13"));
+app.listen(process.env.PORT || 8888, () =>
+  console.log("Running on port 8888 13")
+);
