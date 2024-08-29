@@ -1,0 +1,42 @@
+.notification {
+  position: fixed;
+  bottom: 30px;
+  right: 0;
+  width: 250px;
+  padding: 15px;
+  font-size: 12px;
+  background-color: #444;
+  color: white;
+  border: 2px solid $baseSalatGreen;
+  border-right: 0;
+  border-radius: 5px 0 0 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateX(100%);
+  animation: slide-in 0.5s forwards, fade-out 0.5s forwards 2.5s;
+  @media (min-width: $tablet) {
+    font-size: 15px;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

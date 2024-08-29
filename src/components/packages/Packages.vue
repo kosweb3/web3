@@ -22,6 +22,17 @@
         </div>
       </div>
     </div>
+    <modal
+      v-if="modalLessSelectedPackageVisible"
+      v-model="modalLessSelectedPackageVisible"
+    >
+      <template #content>
+        It is not possible to change the package to a lower one!
+      </template>
+      <template #btn>
+        <button @click="closeModal">Cancel</button>
+      </template>
+    </modal>
     <modal v-if="modalVisible" v-model="modalVisible">
       <template #content
         >Are you sure you want to choose another package?</template
@@ -42,6 +53,7 @@ import { ref, computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useStorePackage } from "@/store/package.js";
 import { useStorePayment } from "@/store/payment.js";
+import { useNotificationStore } from "@/store/notification.js";
 import modal from "../modal.vue";
 
 //store package
@@ -54,7 +66,12 @@ const paymentStore = useStorePayment();
 const { deleteSelectedPackage } = paymentStore;
 const { amountFromDb } = storeToRefs(paymentStore);
 
+//notification store
+const notificationStore = useNotificationStore();
+const { startNofification } = notificationStore;
+
 const modalVisible = ref(false);
+const modalLessSelectedPackageVisible = ref(false);
 
 // if amount not found in DB then return last selected package
 const activePacketBasedPayment = computed(() =>
@@ -73,16 +90,22 @@ const handleDeletePackage = () => {
   selectedPackageObject.value = null;
 };
 const selectedItem = (index, item) => {
-  // check if amount presents in DB and
-  // selectedPackageStoreId (Object) id != index show modal
-  if (amountFromDb.value.amount && selectedPackageObject.value.id !== index) {
+  if (selectedPackageObject.value.id > item.id) {
+    modalLessSelectedPackageVisible.value = true;
+  } else if (
+    amountFromDb.value.amount &&
+    selectedPackageObject.value.id !== index
+  ) {
     modalVisible.value = true;
+  } else {
+    startNofification("Package already selected");
   }
   selectedPackage(index);
 };
 
 const closeModal = () => {
   modalVisible.value = false;
+  modalLessSelectedPackageVisible.value = false;
 };
 </script>
 

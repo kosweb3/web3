@@ -91,18 +91,18 @@ const checkAmountInDb = computed(() => {
   return amountFromDb.value.amount ?? false;
 });
 
-const handleNoteAdded = (noteId) => {
-  newNoteId.value = noteId;
-  setTimeout(() => {
-    newNoteId.value = null; // Reset after a delay
-  }, 3000);
-};
-
 const scrollToForm = () => {
   const newNoteElement = document.querySelector(".new-notes");
   if (newNoteElement) {
     newNoteElement.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+};
+
+const handleNoteAdded = (noteId) => {
+  newNoteId.value = noteId;
+  setTimeout(() => {
+    newNoteId.value = null; // Reset after a delay
+  }, 5000);
 };
 
 const openNewNote = async () => {

@@ -51,19 +51,22 @@ import Loader from "../loader.vue";
 const baseStore = useBaseStore();
 const { loader } = storeToRefs(baseStore);
 
+// notes store
+const storeNotes = useStoreNotes();
+
+const emit = defineEmits(["closeCreating", "noteAdded"]);
+
 const data = ref({
   title: "",
   content: "",
   url: "",
 });
 
-const storeNotes = useStoreNotes();
-const emit = defineEmits(["closeCreating", "noteAdded"]);
-
 const handleCreateNote = async () => {
   if (data.value.title && data.value.content) {
     loader.value = true;
     try {
+      // Note Id last added note
       const noteId = await storeNotes.addNote(data.value);
       data.value.title = data.value.content = "";
       emit("noteAdded", noteId);
