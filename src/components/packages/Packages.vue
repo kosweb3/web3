@@ -34,9 +34,9 @@
       </template>
     </modal>
     <modal v-if="modalVisible" v-model="modalVisible">
-      <template #content
-        >Are you sure you want to choose another package?</template
-      >
+      <template #content>
+        Are you sure you want to choose another package?
+      </template>
       <template #subcontent>
         Recovery of the deleted package is not possible*
       </template>
@@ -78,6 +78,7 @@ const { startNofification } = notificationStore;
 
 const modalVisible = ref(false);
 const modalLessSelectedPackageVisible = ref(false);
+const selectedPackageBeforeDelete = ref(null);
 
 // if amount not found in DB then return last selected package
 const activePacketBasedPayment = computed(() =>
@@ -93,8 +94,9 @@ const activePacketBasedPayment = computed(() =>
 const handleDeletePackage = () => {
   deleteSelectedPackage();
   modalVisible.value = false;
-  selectedPackageObject.value = null;
+  selectedPackageObject.value = selectedPackageBeforeDelete.value;
 };
+
 const selectedItem = (index, item) => {
   if (amountFromDb.value.amount && selectedPackageObject.value.id > item.id) {
     modalLessSelectedPackageVisible.value = true;
@@ -102,11 +104,19 @@ const selectedItem = (index, item) => {
     amountFromDb.value.amount &&
     selectedPackageObject.value.id !== index
   ) {
+    selectedPackageBeforeDelete.value = item;
     modalVisible.value = true;
   } else if (amountFromDb.value.amount) {
     startNofification("Package already selected");
   }
-  selectedPackage(index);
+  // if selected package not exist in DB or clicked element is not selected element
+  if (
+    !selectedPackageObject.value?.id ||
+    selectedPackageObject.value?.id != item.id ||
+    selectedPackageObject.value?.id < item.id
+  ) {
+    selectedPackage(index);
+  }
 };
 
 const closeModal = () => {

@@ -4,6 +4,7 @@ import {
   doc,
   setDoc,
   getDocs,
+  updateDoc,
   deleteDoc,
   collection,
   query,
@@ -47,7 +48,6 @@ const packageAmountThree = ref(29900);
 
 export const useStorePackage = defineStore("storePackage", () => {
   const selectedPackage = async (idPackage) => {
-    console.log(idPackage);
     loadingPackage.value = true;
     const storeAuth = useStoreAuth();
     const { authUser } = storeToRefs(storeAuth);
@@ -63,12 +63,20 @@ export const useStorePackage = defineStore("storePackage", () => {
       "id"
     );
     let packageCollectionQuery = query(packagesCollectionRef);
+    const querySnapshot = await getDocs(packageCollectionQuery);
 
-    let currentDate = new Date().getTime();
-    let id = currentDate.toString();
-    await setDoc(doc(packageCollectionQuery, id), {
-      id: idPackage,
-    });
+    if (!querySnapshot.empty) {
+      const docRef = querySnapshot.docs[0].ref;
+      await updateDoc(docRef, {
+        id: idPackage,
+      });
+    } else {
+      let currentDate = new Date().getTime();
+      let id = currentDate.toString();
+      await setDoc(doc(packageCollectionQuery, id), {
+        id: idPackage,
+      });
+    }
     init();
     loadingPackage.value = false;
   };
@@ -101,30 +109,20 @@ export const useStorePackage = defineStore("storePackage", () => {
       // check selected package user and update max notes
       if (amountFromDb.value?.amount) {
         if (amountFromDb.value?.amount === packageAmountOne.value) {
-          // if user payd 100 select [0] elements from packages array
-          // add info about max notessions
           changeSelectedPackage(0);
-          maxNotesFromPackage.value = 5;
         } else if (amountFromDb.value?.amount === packageAmountTwo.value) {
           changeSelectedPackage(1);
-          maxNotesFromPackage.value = 10;
         } else if (amountFromDb.value?.amount === packageAmountThree.value) {
           changeSelectedPackage(2);
-          maxNotesFromPackage.value = 20;
         }
       } else {
-        // if User not payed select last element from packages array
-        // show last selected package
         selectedPackageObject.value = newPackage[newPackage.length - 1];
         if (selectedPackageObject.value?.idPackage === 0) {
           changeSelectedPackage(0);
-          maxNotesFromPackage.value = 5;
         } else if (selectedPackageObject.value?.idPackage === 1) {
           changeSelectedPackage(1);
-          maxNotesFromPackage.value = 10;
         } else if (selectedPackageObject.value?.idPackage === 2) {
           changeSelectedPackage(2);
-          maxNotesFromPackage.value = 20;
         }
       }
       loadingPackage.value = false;
@@ -132,6 +130,13 @@ export const useStorePackage = defineStore("storePackage", () => {
   };
 
   const changeSelectedPackage = (id) => {
+    id === 0
+      ? (maxNotesFromPackage.value = 5)
+      : id === 1
+      ? (maxNotesFromPackage.value = 10)
+      : id === 2
+      ? (maxNotesFromPackage.value = 20)
+      : null;
     return (selectedPackageObject.value = packages.value[id]);
   };
 
