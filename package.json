@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "test": "vitest",
     "preview": "vite preview",
     "start": "nodemon --watch index.js --exec 'node --no-warnings index.js'"
   },
@@ -38,6 +39,7 @@
     "sass": "^1.77.8",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
+    "vitest": "^2.0.5",
     "vue-tsc": "^2.0.24",
     "webpack-bundle-analyzer": "^4.10.2"
   },

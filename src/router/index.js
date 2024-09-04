@@ -35,6 +35,12 @@ const routes = [
     component: Login,
     meta: { requiresGuest: true },
   },
+  // {
+  //   path: `/crypto-price`,
+  //   name: "crypto",
+  //   component: CoinTracker,
+  //   meta: { requiresGuest: true },
+  // },
   {
     path: `/notes`,
     name: "notes",

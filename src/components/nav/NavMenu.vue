@@ -16,6 +16,7 @@
           {{ notesLength }}/{{ maxNotesFromPackage }}
         </span>
       </router-link>
+      <router-link to="/crypto-price" @click="toggleMenu"> Crypto </router-link>
       <span v-if="!userAuth" @click="toggleMenu">
         <router-link to="/login"> Login </router-link>
       </span>
