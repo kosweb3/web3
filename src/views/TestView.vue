@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 defineProps<{
-  element: string;
+  element?: string;
   ariaLabel?: string;
-  isDisabled: boolean;
+  isDisabled?: boolean;
 }>();
 </script>
 
