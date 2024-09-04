@@ -1,4 +1,5 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "vue-skeletor/dist/vue-skeletor.css";
 
 @import "./scss/collors.scss";
 @import "./scss/base.scss";
@@ -6,9 +7,10 @@
 @import "./scss/grid.scss";
 
 // components
-@import "./scss/components/buttons/connect-wallet-button.scss";
 @import "./scss/navigation.scss";
+@import "./scss/components/buttons/connect-wallet-button.scss";
 @import "./scss/components/form.scss";
+@import "./scss/components/account-info.scss";
 @import "./scss/components/auth/user-data.scss";
 @import "./scss/components/loader.scss";
 @import "./scss/components/modal.scss";

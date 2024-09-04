@@ -1,11 +1,21 @@
 <template>
-  <div class="notification">{{ notificationContent }}</div>
+  <div
+    :class="[
+      'notification',
+      { 'notification--err': notificationType === 'errtype' },
+    ]"
+  >
+    {{ notificationContent }}
+  </div>
 </template>
 
 <script setup>
 const props = defineProps({
   notificationContent: {
-    typeo: String,
+    type: String,
+  },
+  notificationType: {
+    type: String,
   },
 });
 </script>

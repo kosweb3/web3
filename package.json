@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "test": "vitest",
+    "test:unit": "vitest --environment jsdom",
     "preview": "vite preview",
     "start": "nodemon --watch index.js --exec 'node --no-warnings index.js'"
   },
@@ -31,10 +31,13 @@
     "stripe": "^16.8.0",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0",
+    "vue-skeletor": "^1.0.6",
     "web3": "^4.11.1"
   },
   "devDependencies": {
+    "@testing-library/vue": "^8.1.0",
     "@vitejs/plugin-vue": "^5.0.5",
+    "jsdom": "^25.0.0",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.77.8",
     "typescript": "^5.2.2",

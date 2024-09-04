@@ -17,6 +17,9 @@
   @media (min-width: $tablet) {
     font-size: 15px;
   }
+  &--err {
+    border-color: $error;
+  }
 }
 
 @keyframes slide-in {

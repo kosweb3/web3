@@ -1,7 +1,14 @@
 <template>
   <div class="home-view">
     <div class="home-view__container">
-      <AccountInfo />
+      <Suspense>
+        <template #default>
+          <AccountInfo />
+        </template>
+        <template #fallback>
+          <AccountInfoSkeletors />
+        </template>
+      </Suspense>
       <h1>WEB 3 project in progress...</h1>
     </div>
   </div>
@@ -9,6 +16,7 @@
 
 <script setup>
 import AccountInfo from "@/components/accountInfo.vue";
+import AccountInfoSkeletors from "@/components/skeletors/AccountInfoSkeletors.vue";
 </script>
 
 <style lang="scss" scoped></style>

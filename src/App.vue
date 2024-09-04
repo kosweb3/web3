@@ -6,7 +6,10 @@
     <Notification
       v-if="notificationContent"
       :notificationContent="notificationContent"
+      :notificationType="notificationType"
     />
+    <!-- Test -->
+    <!-- <ViewTest element="div">View Test </ViewTest> -->
   </div>
 </template>
 
@@ -15,6 +18,7 @@ import { ref, onMounted } from "vue";
 import Nav from "@/components/nav/Nav.vue";
 import Loader from "@/components/loader.vue";
 import Notification from "@/components/notification.vue";
+import ViewTest from "./views/TestView.vue";
 
 //store
 import { storeToRefs } from "pinia";
@@ -43,7 +47,8 @@ const { loader } = storeToRefs(baseStore);
 
 //notification store
 const notificationStore = useNotificationStore();
-const { notificationContent } = storeToRefs(notificationStore);
+const { notificationContent, notificationType } =
+  storeToRefs(notificationStore);
 
 onMounted(() => {
   initAuth();
