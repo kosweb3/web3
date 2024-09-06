@@ -41,6 +41,7 @@ import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
 import { useBaseStore } from "@/store/base.js";
+import { useNotificationStore } from "@/store/notification.js";
 import modal from "../modal.vue";
 
 const subTitle = ref("");
@@ -56,6 +57,10 @@ const { deleteNote, updateNote } = storeNotes;
 // baseStore
 const baseStore = useBaseStore();
 const { modalVisible } = storeToRefs(baseStore);
+
+//notification store
+const notificationStore = useNotificationStore();
+const { startNofification } = notificationStore;
 
 const modalDelete = ref(false);
 const modalEdit = ref(false);
@@ -88,6 +93,7 @@ const closeModal = () => {
 const confirmDelete = () => {
   deleteNote(props.selectedNote?.id);
   modalVisible.value = false;
+  startNofification("Notes has been deleted!");
 };
 
 const confirmUpdateNote = () => {
@@ -102,6 +108,7 @@ const confirmUpdateNote = () => {
       editTitle.value,
       editUrl.value
     );
+    startNofification("Notes has been updated!");
   }
   modalVisible.value = false;
 };
