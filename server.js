@@ -36,8 +36,9 @@ app.use(cors());
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 app.get("/", (req, res) => {
-  res.send("Hello, this is the root page! new port 8888 test");
+  res.send("Hello, this is the root page!");
 });
+
 let customerDetailsEmail = "";
 let customerDetailsAmount = "";
 app.post(
@@ -103,6 +104,4 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
 });
 app.use(express.json());
 
-app.listen(process.env.PORT || 8888, () =>
-  console.log("Running on port 8888 13")
-);
+app.listen(process.env.PORT || 8888, () => console.log("Listening..."));
