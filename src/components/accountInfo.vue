@@ -39,7 +39,7 @@ const copyToClipboard = () => {
   navigator.clipboard
     .writeText(element)
     .then(() => {
-      startNofification("Text copied to clipboard!");
+      startNofification("Addres copied to clipboard!");
     })
     .catch((err) => {
       startNofification("Failed to copy text", "errtype");

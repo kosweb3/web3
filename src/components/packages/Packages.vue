@@ -2,12 +2,12 @@
   <div class="packages">
     <div class="packages__container">
       <div
+        v-for="(item, index) in packages"
+        :key="index"
         :class="[
           'packages__item',
           { active: activePacketBasedPayment === index },
         ]"
-        v-for="(item, index) in packages"
-        :key="index"
       >
         <div class="packages__package" @click="selectedItem(index, item)">
           <div class="packages__price">{{ item.price }}</div>
@@ -109,11 +109,9 @@ const selectedItem = (index, item) => {
   } else if (amountFromDb.value.amount) {
     startNofification("Package already selected");
   }
-  // if selected package not exist in DB or clicked element is not selected element
   if (
     !selectedPackageObject.value?.id ||
-    selectedPackageObject.value?.id != item.id ||
-    selectedPackageObject.value?.id < item.id
+    selectedPackageObject.value?.id != item.id
   ) {
     selectedPackage(index);
   }

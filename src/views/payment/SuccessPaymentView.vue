@@ -33,7 +33,7 @@ function getTokenFromUrl() {
 }
 
 onMounted(async () => {
-  const token = getTokenFromUrl();
+  const token = sessionStorage.getItem("paymentToken");
   if (token) {
     const response = await fetch(
       "https://kosweb3-01c70ca57756.herokuapp.com/api/record-payment",
@@ -41,7 +41,7 @@ onMounted(async () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Передаємо токен на сервер
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           currency: "usd",

@@ -102,10 +102,11 @@ const handlePayment = async (priceID) => {
     loader.value = true;
     // Get user token from firebase, true refresh token
     const token = await authUser.value.getIdToken(true);
+    sessionStorage.setItem("paymentToken", token);
     stripe.value.redirectToCheckout({
       lineItems: [{ price: priceID, quantity: 1 }],
       mode: "payment",
-      successUrl: `${checkUrl.value}/success-payment?token=${token}`,
+      successUrl: `${checkUrl.value}/success-payment`,
       cancelUrl: `${checkUrl.value}/cancel-payment`,
     });
   } catch (error) {
