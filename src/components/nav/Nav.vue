@@ -1,5 +1,5 @@
 <template>
-  <nav class="navigation">
+  <nav class="container navigation">
     <div class="navigation__items">
       <NavBurgerMenu @click="toggleMenu" />
       <div class="navigation__items-right">

@@ -1,5 +1,5 @@
 <template>
-  <div class="contact-page">
+  <div class="contact-page container">
     <div v-if="!sended">
       <FormKit id="myElement" type="form" @submit="sendEmail">
         <FormKit

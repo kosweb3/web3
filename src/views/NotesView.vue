@@ -1,5 +1,5 @@
 <template>
-  <div class="notes-view">
+  <div class="notes-view container">
     <div v-if="loadingNotes"><Loader /></div>
     <div v-else>
       <!-- if packege not selected -->

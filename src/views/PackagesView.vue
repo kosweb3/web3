@@ -1,5 +1,5 @@
 <template>
-  <div class="package-view">
+  <div class="package-view container">
     <Loader v-if="loadingPackage" />
     <Packages />
     <Basket

@@ -3,6 +3,12 @@
 $mobile: 350px;
 $tablet: 768px;
 
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 // Mobile Devices (Portrait)
 @mixin mobile-portrait {
   @media (max-width: 480px) {
