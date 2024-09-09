@@ -18,6 +18,16 @@
         <input type="text" v-model="editContent" />
         <div v-if="selectedNote.url">Edit url</div>
         <input v-if="selectedNote.url" type="text" v-model="editUrl" />
+        <div v-if="selectedNote.topic">
+          <FormKit
+            type="select"
+            label="Edit topic:"
+            name="sorted"
+            v-model="editTopic"
+            :options="['All', 'Private Note', 'Website Note']"
+            prefix-icon="info"
+          />
+        </div>
       </template>
       <template #btn>
         <button @click="closeModal">Cancel</button>
@@ -49,6 +59,7 @@ const subContent = ref("");
 const editContent = ref("");
 const editTitle = ref("");
 const editUrl = ref("");
+const editTopic = ref("");
 
 // Notes Store
 const storeNotes = useStoreNotes();
@@ -75,6 +86,7 @@ const editHandleNote = () => {
   editContent.value = props.selectedNote?.content;
   editTitle.value = props.selectedNote?.title;
   editUrl.value = props.selectedNote?.url;
+  editTopic.value = props.selectedNote?.topic;
   modalVisible.value = true;
   modalEdit.value = true;
 };
@@ -100,13 +112,15 @@ const confirmUpdateNote = () => {
   if (
     props.selectedNote.title != editTitle.value ||
     props.selectedNote.content != editContent.value ||
-    props.selectedNote.url != editUrl.value
+    props.selectedNote.url != editUrl.value ||
+    props.selectedNote.url != editTopic.value
   ) {
     updateNote(
       props.selectedNote?.id,
       editContent.value,
       editTitle.value,
-      editUrl.value
+      editUrl.value,
+      editTopic.value
     );
     startNofification("Notes has been updated!");
   }

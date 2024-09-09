@@ -26,7 +26,13 @@
         </div>
         <p class="note__block--text">{{ item.content }}</p>
         <div class="flex note__footer">
-          <span class="note__footer--info">by Web3 Aggency</span>
+          <span
+            v-if="item.topic && item.topic != 'All'"
+            class="note__footer--info"
+          >
+            Topic:
+            {{ item.topic }}
+          </span>
           <a class="note__footer--more" href="/">Bootcamp Info</a>
         </div>
         <a
@@ -66,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
 import { useBaseStore } from "@/store/base.js";

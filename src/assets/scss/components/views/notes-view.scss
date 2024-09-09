@@ -24,6 +24,14 @@
     display: flex;
     justify-content: center;
   }
+  &__sort {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px 10px 0;
+    .formkit-input {
+      cursor: pointer;
+    }
+  }
   .web3-button {
     margin: 20px 0;
   }

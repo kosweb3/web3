@@ -20,6 +20,14 @@
         prefix-icon="textarea"
       />
       <FormKit
+        type="select"
+        label="Topic:"
+        name="data.topic"
+        v-model="data.topic"
+        :options="['-', 'Private Note', 'Website Note']"
+        prefix-icon="info"
+      />
+      <FormKit
         type="text"
         label="Additional url"
         name="data.url"
@@ -59,6 +67,7 @@ const emit = defineEmits(["closeCreating", "noteAdded"]);
 const data = ref({
   title: "",
   content: "",
+  topic: "",
   url: "",
 });
 
