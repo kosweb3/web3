@@ -8,7 +8,6 @@
       :notificationContent="notificationContent"
       :notificationType="notificationType"
     />
-    <!-- Test -->
     <!-- <ViewTest element="div">View Test </ViewTest> -->
   </div>
 </template>
@@ -53,9 +52,6 @@ const { notificationContent, notificationType } =
 onMounted(() => {
   initAuth();
   const isDarkStored = localStorage.getItem("isDark") === "true";
-  // check if this string or null
-  // check if localStortage('isDark') is string `"true"` ->  isDark.value is true
-  // check if localStortage('isDark') is not string `"true"` ->  isDark.value is false
   isDark.value = isDarkStored;
   updateBodyClass(isDarkStored);
 });
