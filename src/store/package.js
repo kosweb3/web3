@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { db } from "@/js/firebase";
 import {
   doc,
@@ -45,11 +45,21 @@ const packages = ref([
   },
 ]);
 
-const packageAmountOne = ref(9900);
-const packageAmountTwo = ref(19900);
-const packageAmountThree = ref(29900);
-
 export const useStorePackage = defineStore("storePackage", () => {
+  // paymentStore
+  const paymentStore = useStorePayment();
+  const { amountFromDb } = storeToRefs(paymentStore);
+
+  const packageAmountOne = computed(() => {
+    return amountFromDb.value.crypto ? "0.01" : 9000;
+  });
+  const packageAmountTwo = computed(() => {
+    return amountFromDb.value.crypto ? "0.02" : 19900;
+  });
+  const packageAmountThree = computed(() => {
+    return amountFromDb.value.crypto ? "0.03" : 29900;
+  });
+
   const selectedPackage = async (idPackage) => {
     loadingPackage.value = true;
     const storeAuth = useStoreAuth();
@@ -112,10 +122,14 @@ export const useStorePackage = defineStore("storePackage", () => {
       // check selected package user and update max notes
       if (amountFromDb.value?.amount) {
         if (amountFromDb.value?.amount === packageAmountOne.value) {
+          console.log(packageAmountOne.value, "packageAmountOne");
           changeSelectedPackage(0);
         } else if (amountFromDb.value?.amount === packageAmountTwo.value) {
+          console.log(packageAmountOne.value, "packageAmountTwo");
+
           changeSelectedPackage(1);
         } else if (amountFromDb.value?.amount === packageAmountThree.value) {
+          console.log(packageAmountOne.value, "packageAmountTwo");
           changeSelectedPackage(2);
         }
       } else {
@@ -150,6 +164,7 @@ export const useStorePackage = defineStore("storePackage", () => {
   };
 
   const deleteSelectedPackage = async () => {
+    console.log("deleteSelectedPackage");
     const storeAuth = useStoreAuth();
     const { authUser } = storeToRefs(storeAuth);
 

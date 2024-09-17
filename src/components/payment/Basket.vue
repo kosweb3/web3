@@ -95,7 +95,9 @@ const checkUrl = computed(() => {
 
 const stripe = ref(null);
 
-const handleCryptoPayment = (price) => {
+const handleCryptoPayment = async (price) => {
+  const token = await authUser.value.getIdToken(true);
+  sessionStorage.setItem("paymentToken", token);
   payBySolana(myWallet, price);
   // startNofification("Currenly working with this functionality");
   // console.log("crypto payment");

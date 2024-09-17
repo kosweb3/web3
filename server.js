@@ -71,37 +71,27 @@ app.post(
 // Client side API request
 app.post("/api/record-payment", express.json(), async (req, res) => {
   const authToken = req.headers["authorization"]?.split("Bearer ")[1];
-  console.log("Authorization Token:", authToken);
-
-  if (!authToken) {
-    return res.status(401).send("Authorization token is missing or invalid.");
-  }
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(authToken);
     const uid = decodedToken.uid; // get uid user
 
-    const { currency, paymentStatus, tokenUser, cryptoSignature } = req.body;
-
-    if (!tokenUser && !cryptoSignature) {
-      return res
-        .status(400)
-        .send("Either tokenUser or cryptoSignature is required.");
-    }
-
-    const paymentId = tokenUser || cryptoSignature;
+    const { currency, paymentStatus, tokenUser, cryptoSignature, cryptoPrice } =
+      req.body;
 
     const docRef = db
       .collection("users")
       .doc(uid)
       .collection("payments")
-      .doc(paymentId);
+      .doc(tokenUser);
 
     await docRef.set({
       customer_amount: customerDetailsAmount,
+      crypto_price: cryptoPrice,
       customer_email: customerDetailsEmail,
       currency: currency,
       payment_status: paymentStatus,
+      crypto_signature: cryptoSignature,
       created_at: admin.firestore.FieldValue.serverTimestamp(),
     });
 
