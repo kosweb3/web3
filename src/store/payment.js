@@ -61,7 +61,6 @@ export const useStorePayment = defineStore("storePayment", () => {
       );
     });
     amountFromDb.value = [];
-    sessionStorage.removeItem("paymentToken");
 
     // Wait for all deletions to complete
     await Promise.all(deletePromises);

@@ -71,6 +71,7 @@ app.post(
 // Client side API request
 app.post("/api/record-payment", express.json(), async (req, res) => {
   const authToken = req.headers["authorization"]?.split("Bearer ")[1];
+  console.log("Authorization Token:", authToken);
 
   if (!authToken) {
     return res.status(401).send("Authorization token is missing or invalid.");

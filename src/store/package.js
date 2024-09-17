@@ -174,6 +174,8 @@ export const useStorePackage = defineStore("storePackage", () => {
       );
     });
     notes.value = [];
+    sessionStorage.removeItem("paymentToken");
+    sessionStorage.removeItem("signature");
 
     // Wait for all deletions to complete
     await Promise.all(deletePromises);

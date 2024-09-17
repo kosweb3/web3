@@ -115,9 +115,6 @@ export const useStoreWallet = defineStore("connectWallet", () => {
       const { signature } = await provider.signAndSendTransaction(transaction);
       await connection.confirmTransaction(signature, "confirmed");
       sessionStorage.setItem("signature", signature);
-      console.log("Transaction successful:", signature);
-
-      // const router = useRouter();
       router.push({ name: "success-payment" });
       return signature;
     } catch (err) {
