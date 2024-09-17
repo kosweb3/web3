@@ -34,29 +34,42 @@ function getTokenFromUrl() {
 
 onMounted(async () => {
   const token = sessionStorage.getItem("paymentToken");
+  const signature = sessionStorage.getItem("signature");
+  let requestBody = {};
+
   if (token) {
+    requestBody = {
+      currency: "usd",
+      paymentStatus: "succeeded",
+      tokenUser: token,
+    };
+  } else if (signature) {
+    requestBody = {
+      currency: "crypto",
+      paymentStatus: "succeeded",
+      cryptoSignature: signature,
+    };
+  }
+
+  try {
     const response = await fetch(
       "https://kosweb3-01c70ca57756.herokuapp.com/api/record-payment",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token || signature}`,
         },
-        body: JSON.stringify({
-          currency: "usd",
-          paymentStatus: "succeeded",
-          tokenUser: token,
-        }),
+        body: JSON.stringify(requestBody),
       }
     );
 
     if (!response.ok) {
-      console.error("Failed to send request to server");
+      console.error("Failed to send request to server", response.statusText);
       return;
     }
-  } else {
-    console.error("Token not found in URL");
+  } catch (error) {
+    console.error("Error sending request to server:", error);
   }
 });
 </script>

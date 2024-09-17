@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, toRefs } from "vue";
 import { storeToRefs } from "pinia";
 import { useStoreNotes } from "@/store/notes.js";
 import { useBaseStore } from "@/store/base.js";
@@ -82,11 +82,20 @@ const props = defineProps({
     default: {},
   },
 });
+
+const {
+  id: idProps,
+  content: contentProps,
+  title: titleProps,
+  url: urlProps,
+  topic: topicProps,
+} = toRefs(props.selectedNote);
+
 const editHandleNote = () => {
-  editContent.value = props.selectedNote?.content;
-  editTitle.value = props.selectedNote?.title;
-  editUrl.value = props.selectedNote?.url;
-  editTopic.value = props.selectedNote?.topic;
+  editContent.value = contentProps.value;
+  editTitle.value = titleProps.value;
+  editUrl.value = urlProps.value;
+  editTopic.value = topicProps.value;
   modalVisible.value = true;
   modalEdit.value = true;
 };
@@ -94,8 +103,8 @@ const editHandleNote = () => {
 const deleteHandleNote = () => {
   modalVisible.value = true;
   modalDelete.value = true;
-  subContent.value = props.selectedNote.content;
-  subTitle.value = props.selectedNote.title;
+  subContent.value = contentProps.value;
+  subTitle.value = titleProps.value;
 };
 
 const closeModal = () => {
@@ -110,13 +119,13 @@ const confirmDelete = () => {
 
 const confirmUpdateNote = () => {
   if (
-    props.selectedNote.title != editTitle.value ||
-    props.selectedNote.content != editContent.value ||
-    props.selectedNote.url != editUrl.value ||
-    props.selectedNote.url != editTopic.value
+    titleProps.value != editTitle.value ||
+    contentProps.value != editContent.value ||
+    urlProps.value != editUrl.value ||
+    topicProps.value != editTopic.value
   ) {
     updateNote(
-      props.selectedNote?.id,
+      idProps.value,
       editContent.value,
       editTitle.value,
       editUrl.value,

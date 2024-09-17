@@ -80,13 +80,13 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(authToken);
     const uid = decodedToken.uid; // get uid user
 
-    const { currency, paymentStatus, tokenUser } = req.body;
+    const { currency, paymentStatus, tokenUser, cryptoSignature } = req.body;
 
     const docRef = db
       .collection("users")
       .doc(uid)
       .collection("payments")
-      .doc(tokenUser);
+      .doc(tokenUser || cryptoSignature);
 
     await docRef.set({
       customer_amount: customerDetailsAmount,

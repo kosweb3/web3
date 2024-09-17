@@ -53,12 +53,12 @@ const routes = [
   },
   {
     path: `/success-payment`,
-    name: "success",
+    name: "success-payment",
     component: SuccessPaymentView,
   },
   {
     path: `/cancel-payment`,
-    name: "cancel",
+    name: "cancel-payment",
     component: CancelPaymentView,
   },
 ];

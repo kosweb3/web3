@@ -24,14 +24,14 @@
           <img src="../../assets/img/stripe-logo.png" alt="pay by stripe" />
         </button>
         <button
-          v-if="account"
-          @click="handleCryptoPayment"
+          v-if="isConnected"
+          @click="handleCryptoPayment(item.cryproPrice)"
           class="basket-container__crypto-pay"
         >
-          <div class="basket-container__price">~0.26 ETH</div>
+          <div class="basket-container__price">{{ item.cryproPrice }}sol</div>
 
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/archive/3/36/20220831120338%21MetaMask_Fox.svg"
+            src="https://solana.com/_next/static/media/logotype.e4df684f.svg"
             alt="pay by crypto"
           />
         </button>
@@ -43,7 +43,7 @@
 <script setup>
 import { ref, computed, onMounted, nextTick } from "vue";
 import { storeToRefs } from "pinia";
-import { useStoreWallet } from "@/store/wallet";
+import { useStoreWallet } from "@/store/wallet-new";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStorePackage } from "@/store/package.js";
 import { useStoreAuth } from "@/store/auth.js";
@@ -69,7 +69,10 @@ const { startNofification } = notificationStore;
 
 // crypto wallet store
 const storeWallet = useStoreWallet();
-const { account, balance, error } = storeToRefs(storeWallet);
+const { payBySolana } = storeWallet;
+const { isConnected } = storeToRefs(storeWallet);
+
+const myWallet = import.meta.env.VITE_CRYPTO_SOLANA_WALLET;
 
 const props = defineProps({
   item: {
@@ -92,9 +95,10 @@ const checkUrl = computed(() => {
 
 const stripe = ref(null);
 
-const handleCryptoPayment = () => {
-  startNofification("Currenly working with this functionality");
-  console.log("crypto payment");
+const handleCryptoPayment = (price) => {
+  payBySolana(myWallet, price);
+  // startNofification("Currenly working with this functionality");
+  // console.log("crypto payment");
 };
 
 const handlePayment = async (priceID) => {

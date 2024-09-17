@@ -52,8 +52,9 @@
     padding-left: 0;
     img {
       width: 80px;
-      height: 38px;
+      height: 100%;
       max-width: 80px;
+      max-height: 38px;
     }
     &:hover {
       opacity: 0.8;

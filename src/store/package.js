@@ -22,6 +22,7 @@ const packages = ref([
   {
     name: "Package Easy",
     price: "99$",
+    cryproPrice: 0.01,
     stripePriceID: "price_1Pt8CvRqf53S8zO6n8eqLt8B",
     id: 0,
     benefits: ["5 notes", "1 website", "add more"],
@@ -29,6 +30,7 @@ const packages = ref([
   {
     name: "Package Standart",
     price: "199$",
+    cryproPrice: 0.02,
     stripePriceID: "price_1Pt8DLRqf53S8zO6g9x5PAIY",
     id: 1,
     benefits: ["10 project notes", "2 websites", "add more"],
@@ -36,6 +38,7 @@ const packages = ref([
   {
     name: "Package Pro",
     price: "299$",
+    cryproPrice: 0.03,
     stripePriceID: "price_1Pt8DmRqf53S8zO6LkdGJ9VU",
     id: 2,
     benefits: ["20 project notes", "3 websites", "Support 24/7", "and more"],

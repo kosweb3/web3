@@ -1,10 +1,12 @@
 # Web3 Project
 
-# Stack: Vue 3 + Javascript + Vite + Pinia + Node.js + Stripe + Amazon AWS
+# Stack: Vue 3 + Javascript + Vite + Pinia + VITEST + Node.js + Stripe + Amazon AWS
 
 # web3 (in the future, payments in cryptocurrency will be possible)
 
 # Using Vue 3 + Javascript + Vite + Pinia
+
+# Using Vitest for unit testing
 
 # Using Node.js with express for the server
 

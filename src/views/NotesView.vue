@@ -73,7 +73,6 @@ import Loader from "@/components/loader.vue";
 const acceptNewNotes = ref(false);
 const newNoteId = ref(null);
 const newNoteRef = ref(null);
-// const notesItems = ref([]);
 const sortedBy = ref("All");
 const isFiltering = ref(false);
 

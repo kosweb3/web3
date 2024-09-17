@@ -3,7 +3,7 @@
     <div class="home-view__container">
       <Suspense>
         <template #default>
-          <AccountInfo />
+          <AccountInfo data-testid="account-info" />
         </template>
         <template #fallback>
           <AccountInfoSkeletors />
