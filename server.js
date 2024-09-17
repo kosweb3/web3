@@ -82,11 +82,19 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
 
     const { currency, paymentStatus, tokenUser, cryptoSignature } = req.body;
 
+    if (!tokenUser && !cryptoSignature) {
+      return res
+        .status(400)
+        .send("Either tokenUser or cryptoSignature is required.");
+    }
+
+    const paymentId = tokenUser || cryptoSignature;
+
     const docRef = db
       .collection("users")
       .doc(uid)
       .collection("payments")
-      .doc(tokenUser || cryptoSignature);
+      .doc(paymentId);
 
     await docRef.set({
       customer_amount: customerDetailsAmount,
