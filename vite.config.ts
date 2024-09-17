@@ -13,6 +13,9 @@ export default defineConfig({
     //   open: true, // Відкриває браузер після збірки
     // }),
   ],
+  define: {
+    "process.env": process.env,
+  },
   base: "",
   test: {
     globals: true,
