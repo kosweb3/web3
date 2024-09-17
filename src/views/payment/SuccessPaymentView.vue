@@ -35,6 +35,9 @@ function getTokenFromUrl() {
 onMounted(async () => {
   const token = sessionStorage.getItem("paymentToken");
   const signature = sessionStorage.getItem("signature");
+  if (!token && !signature) {
+    console.error("No token or signature available.");
+  }
   let requestBody = {};
 
   if (token) {
