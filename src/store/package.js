@@ -122,14 +122,10 @@ export const useStorePackage = defineStore("storePackage", () => {
       // check selected package user and update max notes
       if (amountFromDb.value?.amount) {
         if (amountFromDb.value?.amount === packageAmountOne.value) {
-          console.log(packageAmountOne.value, "packageAmountOne");
           changeSelectedPackage(0);
         } else if (amountFromDb.value?.amount === packageAmountTwo.value) {
-          console.log(packageAmountOne.value, "packageAmountTwo");
-
           changeSelectedPackage(1);
         } else if (amountFromDb.value?.amount === packageAmountThree.value) {
-          console.log(packageAmountOne.value, "packageAmountTwo");
           changeSelectedPackage(2);
         }
       } else {

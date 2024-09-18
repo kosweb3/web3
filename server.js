@@ -91,15 +91,24 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
       .collection("payments")
       .doc(tokenUser);
 
-    await docRef.set({
-      customer_amount: customerDetailsAmount,
-      crypto_price: cryptoPrice,
-      customer_email: customerDetailsEmail || customerCryptoPaymentEmail,
-      currency: currency,
-      payment_status: paymentStatus,
-      crypto_signature: cryptoSignature,
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
-    });
+    if (cryptoSignature) {
+      await docRef.set({
+        crypto_price: cryptoPrice,
+        customer_email: customerCryptoPaymentEmail,
+        currency: currency,
+        payment_status: paymentStatus,
+        crypto_signature: cryptoSignature,
+        created_at: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    } else {
+      await docRef.set({
+        customer_amount: customerDetailsAmount,
+        customer_email: customerDetailsEmail,
+        currency: currency,
+        payment_status: paymentStatus,
+        created_at: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
 
     res.json({ success: true });
   } catch (err) {
