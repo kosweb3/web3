@@ -51,7 +51,7 @@ export const useStorePackage = defineStore("storePackage", () => {
   const { amountFromDb } = storeToRefs(paymentStore);
 
   const packageAmountOne = computed(() => {
-    return amountFromDb.value.crypto ? "0.01" : 9000;
+    return amountFromDb.value.crypto ? "0.01" : 9900;
   });
   const packageAmountTwo = computed(() => {
     return amountFromDb.value.crypto ? "0.02" : 19900;

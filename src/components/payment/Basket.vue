@@ -16,7 +16,7 @@
       <div>{{ item.name }}</div>
       <div class="basket-container__payments">
         <button
-          @click="handlePayment(item.stripePriceID)"
+          @click="handleStripePayment(item.stripePriceID)"
           :disabled="!stripe || loader.value"
           class="basket-container__pay"
         >
@@ -95,24 +95,28 @@ const checkUrl = computed(() => {
 
 const stripe = ref(null);
 
+const idToketUser = async () => {
+  // Get user token from firebase, true refresh token
+  const token = await authUser.value.getIdToken(true);
+  return sessionStorage.setItem("paymentToken", token);
+};
+
 const handleCryptoPayment = async (price) => {
   try {
     loader.value = true;
 
-    const token = await authUser.value.getIdToken(true);
-    sessionStorage.setItem("paymentToken", token);
+    idToketUser();
     payBySolana(myWallet, price);
   } catch (err) {
     startNofification("Something went wrong!");
   }
 };
 
-const handlePayment = async (priceID) => {
+const handleStripePayment = async (priceID) => {
   try {
     loader.value = true;
-    // Get user token from firebase, true refresh token
-    const token = await authUser.value.getIdToken(true);
-    sessionStorage.setItem("paymentToken", token);
+
+    idToketUser();
     stripe.value.redirectToCheckout({
       lineItems: [{ price: priceID, quantity: 1 }],
       mode: "payment",
