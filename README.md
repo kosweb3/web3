@@ -14,4 +14,4 @@
 
 # using Amazon AWS S3 amazon to deployment, EC2 to host Node.js server
 
-[Technologies](https://github.com/kosweb3/web3/blob/main/src/assets/img/technologies.png)
+![Technologies](https://github.com/kosweb3/web3/blob/main/src/assets/img/technologies.png)
