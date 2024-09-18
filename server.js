@@ -76,8 +76,14 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(authToken);
     const uid = decodedToken.uid; // get uid user
 
-    const { currency, paymentStatus, tokenUser, cryptoSignature, cryptoPrice } =
-      req.body;
+    const {
+      currency,
+      paymentStatus,
+      tokenUser,
+      cryptoSignature,
+      cryptoPrice,
+      customerCryptoPaymentEmail,
+    } = req.body;
 
     const docRef = db
       .collection("users")
@@ -88,7 +94,7 @@ app.post("/api/record-payment", express.json(), async (req, res) => {
     await docRef.set({
       customer_amount: customerDetailsAmount,
       crypto_price: cryptoPrice,
-      customer_email: customerDetailsEmail,
+      customer_email: customerDetailsEmail || customerCryptoPaymentEmail,
       currency: currency,
       payment_status: paymentStatus,
       crypto_signature: cryptoSignature,

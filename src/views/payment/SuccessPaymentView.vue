@@ -35,6 +35,10 @@ const cryptoPrice = computed(() => {
   return price ? price.toString() : null;
 });
 
+const customerCryptoPaymentEmail = computed(() => {
+  return authUser.value?.email || null;
+});
+
 // get token from URL
 function getTokenFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -54,6 +58,7 @@ onMounted(async () => {
       paymentStatus: "succeeded",
       tokenUser: token,
       cryptoSignature: signature,
+      customerCryptoPaymentEmail: customerCryptoPaymentEmail.value,
     };
   } else if (token) {
     requestBody = {
