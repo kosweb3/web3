@@ -1,10 +1,19 @@
 <template>
-  <button :class="['web3-button', { disabled: disabled }]"><slot /></button>
+  <button
+    :class="['web3-button', { disabled: disabledClass }]"
+    :disabled="disabledButton"
+  >
+    <slot />
+  </button>
 </template>
 
 <script setup>
 const props = defineProps({
-  disabled: {
+  disabledClass: {
+    type: Boolean,
+    default: false,
+  },
+  disabledButton: {
     type: Boolean,
     default: false,
   },

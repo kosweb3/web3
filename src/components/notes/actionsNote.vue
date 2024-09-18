@@ -18,7 +18,7 @@
         <input type="text" v-model="editContent" />
         <div v-if="selectedNote.url">Edit url</div>
         <input v-if="selectedNote.url" type="text" v-model="editUrl" />
-        <div v-if="selectedNote.topic">
+        <div>
           <FormKit
             type="select"
             label="Edit topic:"

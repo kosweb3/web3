@@ -11,6 +11,7 @@ import { useStoreNotes } from "@/store/notes.js";
 import { useStorePackage } from "@/store/package.js";
 import { useBaseStore } from "@/store/base.js";
 import { useStorePayment } from "@/store/payment.js";
+import { useStoreWallet } from "@/store/crypto-payment";
 
 import { auth } from "@/js/firebase";
 
@@ -33,6 +34,10 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     const storePayment = useStorePayment();
     const { getUserSelectedAmount } = storePayment;
 
+    //connectWallet Store
+    const connectWallet = useStoreWallet();
+    const { disconnectWallet } = connectWallet;
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         authUser.value = user;
@@ -43,6 +48,7 @@ export const useStoreAuth = defineStore("storeAuth", () => {
         authUser.value = "";
         clearNotes();
         clearSelectedPackage();
+        disconnectWallet();
         // router.replace("/web3/login");
       }
     });

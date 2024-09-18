@@ -24,7 +24,7 @@
         {{ maxNotesFromPackage }}
       </h3>
 
-      <div class="notes-view__sort" v-if="notes.length">
+      <div class="notes-view__sort" v-if="notes.length && checkAmountInDb">
         <FormKit
           type="select"
           label="Sorted by:"
@@ -49,7 +49,7 @@
         <Web3Button
           v-if="!acceptNewNotes && checkAmountInDb"
           @click="openNewNote"
-          :disabled="checkDisabledButton"
+          :disabledButton="checkDisabledButton"
           :title="`In your package you have max ${maxNotesFromPackage} notes. Please upgrade your package to add more.`"
         >
           Add New Note

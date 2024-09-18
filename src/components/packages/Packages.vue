@@ -22,6 +22,9 @@
         </div>
       </div>
     </div>
+    <div v-if="!isConnected" class="packages__crypto-info">
+      ***for crypto payments, you need to connect your wallet first.
+    </div>
     <modal
       v-if="modalLessSelectedPackageVisible"
       v-model="modalLessSelectedPackageVisible"
@@ -53,6 +56,7 @@ import { ref, computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useStorePackage } from "@/store/package.js";
 import { useStorePayment } from "@/store/payment.js";
+import { useStoreWallet } from "@/store/crypto-payment";
 import { useNotificationStore } from "@/store/notification.js";
 import modal from "../modal.vue";
 
@@ -75,6 +79,11 @@ const { amountFromDb } = storeToRefs(paymentStore);
 //notification store
 const notificationStore = useNotificationStore();
 const { startNofification } = notificationStore;
+
+// crypto wallet store
+const storeWallet = useStoreWallet();
+const { payBySolana } = storeWallet;
+const { isConnected } = storeToRefs(storeWallet);
 
 const modalVisible = ref(false);
 const modalLessSelectedPackageVisible = ref(false);

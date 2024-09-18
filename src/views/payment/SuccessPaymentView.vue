@@ -17,6 +17,7 @@ import { ref, computed, onMounted, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStoreAuth } from "@/store/auth.js";
+import { useBaseStore } from "@/store/base.js";
 import { useStorePackage } from "@/store/package.js";
 import Web3Button from "@/components/buttons/Web3Button.vue";
 
@@ -24,6 +25,10 @@ import Web3Button from "@/components/buttons/Web3Button.vue";
 const storeAuth = useStoreAuth();
 const { initAuth } = storeAuth;
 const { authUser } = storeToRefs(storeAuth);
+
+// baseStore
+const baseStore = useBaseStore();
+const { loader } = storeToRefs(baseStore);
 
 // package store
 const storePackage = useStorePackage();
@@ -46,6 +51,7 @@ function getTokenFromUrl() {
 }
 
 onMounted(async () => {
+  loader.value = false;
   const token = sessionStorage.getItem("paymentToken");
   const signature = sessionStorage.getItem("signature");
 

@@ -36,11 +36,8 @@
   }
   &__price {
     font-weight: 900;
-    font-size: 22px;
+    font-size: 20px;
     color: $black;
-    @media (min-width: $tablet) {
-      font-size: 27px;
-    }
   }
   &__pay,
   &__crypto-pay {

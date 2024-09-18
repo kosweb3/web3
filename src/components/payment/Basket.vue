@@ -96,11 +96,15 @@ const checkUrl = computed(() => {
 const stripe = ref(null);
 
 const handleCryptoPayment = async (price) => {
-  const token = await authUser.value.getIdToken(true);
-  sessionStorage.setItem("paymentToken", token);
-  payBySolana(myWallet, price);
-  // startNofification("Currenly working with this functionality");
-  // console.log("crypto payment");
+  try {
+    loader.value = true;
+
+    const token = await authUser.value.getIdToken(true);
+    sessionStorage.setItem("paymentToken", token);
+    payBySolana(myWallet, price);
+  } catch (err) {
+    startNofification("Something went wrong!");
+  }
 };
 
 const handlePayment = async (priceID) => {
@@ -116,9 +120,8 @@ const handlePayment = async (priceID) => {
       cancelUrl: `${checkUrl.value}/cancel-payment`,
     });
   } catch (error) {
-    console.error("Payment error:", error);
-  } finally {
     loader.value = false;
+    console.error("Payment error:", error);
   }
 };
 

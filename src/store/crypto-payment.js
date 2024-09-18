@@ -1,6 +1,6 @@
 import router from "@/router";
 import { ref } from "vue";
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 import {
   Connection,
   PublicKey,
@@ -10,6 +10,7 @@ import {
 } from "@solana/web3.js";
 import { Buffer } from "buffer";
 import { useNotificationStore } from "@/store/notification.js";
+import { useBaseStore } from "@/store/base.js";
 
 // add Buffer to global object window
 window.Buffer = Buffer;
@@ -30,6 +31,24 @@ export const useStoreWallet = defineStore("connectWallet", () => {
     window.open("https://phantom.app", "_blank");
   };
 
+  const disconnectWallet = async () => {
+    //notification store
+    const notificationStore = useNotificationStore();
+    const { startNofification } = notificationStore;
+
+    const provider = getProvider();
+    if (provider) {
+      try {
+        await provider.disconnect();
+        isConnected.value = false;
+        solanaAdres.value = null;
+        sessionStorage.removeItem("walletConnected");
+      } catch (err) {
+        startNofification(err.message);
+      }
+    }
+  };
+
   // connect Phantom and get key
   const connectWallet = async () => {
     //notification store
@@ -43,6 +62,8 @@ export const useStoreWallet = defineStore("connectWallet", () => {
         isConnected.value = !!response.publicKey;
         solanaAdres.value = response.publicKey.toString();
 
+        sessionStorage.setItem("walletConnected", "true");
+
         // console.log("З якого кошиля плачу:", response.publicKey.toString());
         return response.publicKey;
       } catch (err) {
@@ -53,7 +74,8 @@ export const useStoreWallet = defineStore("connectWallet", () => {
 
   const checkIfWalletIsConnected = async () => {
     const prov = getProvider();
-    if (prov) {
+    const walletConnected = sessionStorage.getItem("walletConnected");
+    if (prov && walletConnected === "true") {
       try {
         const response = await prov.connect({ onlyIfTrusted: true });
         if (response.publicKey) {
@@ -68,12 +90,18 @@ export const useStoreWallet = defineStore("connectWallet", () => {
     //notification store
     const notificationStore = useNotificationStore();
     const { startNofification } = notificationStore;
+
+    // baseStore
+    const baseStore = useBaseStore();
+    const { loader } = storeToRefs(baseStore);
+
     // console.log("На який кошильок плачу", receiverPublicKeyString);
     const provider = getProvider();
     if (!provider) return;
 
+    //from
     const senderPublicKey = await connectWallet();
-
+    // to
     const receiverPublicKey = new PublicKey(receiverPublicKeyString);
 
     const instruction = SystemProgram.transfer({
@@ -98,6 +126,7 @@ export const useStoreWallet = defineStore("connectWallet", () => {
       router.push({ name: "success-payment" });
       return signature;
     } catch (err) {
+      loader.value = false;
       startNofification(err.message);
     }
   };
@@ -106,6 +135,7 @@ export const useStoreWallet = defineStore("connectWallet", () => {
     isConnected,
     solanaAdres,
     connectWallet,
+    disconnectWallet,
     payBySolana,
     checkIfWalletIsConnected,
   };
