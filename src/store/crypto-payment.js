@@ -11,23 +11,15 @@ import {
 import { Buffer } from "buffer";
 import { useNotificationStore } from "@/store/notification.js";
 
-// Додаємо Buffer до глобального об'єкта window
+// add Buffer to global object window
 window.Buffer = Buffer;
-// Підключаємося до мережі Solana (Devnet або Mainnet)
+// connect to Solana (Devnet або Mainnet)
 const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
 export const useStoreWallet = defineStore("connectWallet", () => {
   const isConnected = ref(false);
+  const solanaAdres = ref();
 
-  const toggleWalletConnection = () => {
-    if (isConnected.value) {
-      disconnectWallet();
-    } else {
-      connectWallet();
-    }
-  };
-
-  // Перевіряємо, чи доступний Phantom гаманець
   const getProvider = () => {
     if ("solana" in window) {
       const provider = window.solana;
@@ -49,7 +41,9 @@ export const useStoreWallet = defineStore("connectWallet", () => {
       try {
         const response = await provider.connect();
         isConnected.value = !!response.publicKey;
-        console.log("З якого кошиля плачу:", response.publicKey.toString());
+        solanaAdres.value = response.publicKey.toString();
+
+        // console.log("З якого кошиля плачу:", response.publicKey.toString());
         return response.publicKey;
       } catch (err) {
         startNofification(err.message);
@@ -57,60 +51,46 @@ export const useStoreWallet = defineStore("connectWallet", () => {
     }
   };
 
-  // Відключення від гаманця
-  const disconnectWallet = async () => {
-    const prov = getProvider();
-    if (prov) {
-      try {
-        await prov.disconnect();
-        isConnected.value = false;
-        console.log("Wallet disconnected");
-      } catch (err) {
-        console.error("Failed to disconnect wallet", err);
-      }
-    }
-  };
-
   const checkIfWalletIsConnected = async () => {
     const prov = getProvider();
     if (prov) {
-      const response = await prov.connect({ onlyIfTrusted: true });
-      if (response.publicKey) {
-        isConnected.value = true;
-      }
+      try {
+        const response = await prov.connect({ onlyIfTrusted: true });
+        if (response.publicKey) {
+          isConnected.value = true;
+          solanaAdres.value = response.publicKey.toString();
+        }
+      } catch (err) {}
     }
   };
 
-  // Відправка транзакції
   const payBySolana = async (receiverPublicKeyString, price) => {
     //notification store
     const notificationStore = useNotificationStore();
     const { startNofification } = notificationStore;
-    console.log("На який кошильок плачу", receiverPublicKeyString);
+    // console.log("На який кошильок плачу", receiverPublicKeyString);
     const provider = getProvider();
     if (!provider) return;
 
-    // Підключаємо гаманець
     const senderPublicKey = await connectWallet();
 
-    // Публічний ключ отримувача
     const receiverPublicKey = new PublicKey(receiverPublicKeyString);
 
     const instruction = SystemProgram.transfer({
       fromPubkey: senderPublicKey,
       toPubkey: receiverPublicKey,
-      lamports: price * LAMPORTS_PER_SOL, // Кількість SOL
+      lamports: price * LAMPORTS_PER_SOL,
     });
 
-    // Створюємо транзакцію
+    // Create new transaction
     const transaction = new Transaction().add(instruction);
 
-    // Отримуємо recentBlockhash
+    // get recentBlockhash
     const { blockhash } = await connection.getLatestBlockhash();
     transaction.recentBlockhash = blockhash;
-    transaction.feePayer = senderPublicKey; // Додаємо відправника як платника комісії
+    transaction.feePayer = senderPublicKey; // custommer payment fee
 
-    // Підписуємо та відправляємо транзакцію
+    // signAndSendTransaction
     try {
       const { signature } = await provider.signAndSendTransaction(transaction);
       await connection.confirmTransaction(signature, "confirmed");
@@ -124,7 +104,8 @@ export const useStoreWallet = defineStore("connectWallet", () => {
 
   return {
     isConnected,
-    toggleWalletConnection,
+    solanaAdres,
+    connectWallet,
     payBySolana,
     checkIfWalletIsConnected,
   };

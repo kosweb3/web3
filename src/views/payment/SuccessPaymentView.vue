@@ -1,6 +1,5 @@
 <template>
   <div class="success-payment-view">
-    cryptoPrice{{ cryptoPrice }}
     <h2>Welcome to new world WEB3</h2>
     <div class="firework"></div>
     <div class="firework"></div>

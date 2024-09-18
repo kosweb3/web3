@@ -1,6 +1,6 @@
 <template>
   <div class="account-info">
-    <div v-if="account && balance">
+    <div v-if="isConnected">
       <h2>WalletInfo</h2>
       <p>
         Connected account:
@@ -10,24 +10,22 @@
           ref="copiedValue"
           class="account-info__copied"
         >
-          {{ account }}
+          {{ solanaAdres }}
         </span>
       </p>
-      <p>Balance: {{ balance }} ETH</p>
     </div>
-    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import { useStoreWallet } from "@/store/wallet";
+import { useStoreWallet } from "@/store/crypto-payment";
 import { useNotificationStore } from "@/store/notification.js";
 
 // wallet store
 const store = useStoreWallet();
-const { account, balance, error } = storeToRefs(store);
+const { isConnected, solanaAdres } = storeToRefs(store);
 
 //notification store
 const notificationStore = useNotificationStore();

@@ -43,7 +43,7 @@
 <script setup>
 import { ref, computed, onMounted, nextTick } from "vue";
 import { storeToRefs } from "pinia";
-import { useStoreWallet } from "@/store/wallet-new";
+import { useStoreWallet } from "@/store/crypto-payment";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStorePackage } from "@/store/package.js";
 import { useStoreAuth } from "@/store/auth.js";

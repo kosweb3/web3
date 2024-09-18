@@ -10,4 +10,7 @@
     background-color: $white;
     color: $black;
   }
+  &.disabled {
+    opacity: 0.5;
+  }
 }

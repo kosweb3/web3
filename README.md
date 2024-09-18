@@ -12,6 +12,6 @@
 
 # Using Firestore at the database
 
-# Using Stripe for payment processing
+# Using Stripe for payment processing + payment by Solana******\*\*\*******
 
 # using Amazon AWS S3 amazon to deployment, EC2 to host Node.js server

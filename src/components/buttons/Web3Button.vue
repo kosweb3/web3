@@ -1,7 +1,14 @@
 <template>
-  <button class="web3-button"><slot /></button>
+  <button :class="['web3-button', { disabled: disabled }]"><slot /></button>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
 
 <style lang="scss" scoped></style>
