@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { useRouter } from "vue-router";
 import { useStoreNotes } from "@/store/notes.js";
@@ -17,6 +18,7 @@ import { auth } from "@/js/firebase";
 
 const authUser = ref("");
 const errorUser = ref("");
+const userStoreAvatar = ref("");
 
 export const useStoreAuth = defineStore("storeAuth", () => {
   const router = useRouter();
@@ -54,23 +56,31 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     });
   };
 
-  const registerUser = (credentials) => {
-    createUserWithEmailAndPassword(
-      auth,
-      credentials.email,
-      credentials.password
-    )
-      .then((userCredential) => {
-        router.push("/");
-        // const user = userCredential.user;
-      })
-      .catch((error) => {
-        if (error.message.includes("email-already-in-use")) {
-          errorUser.value = "Email already use";
-        } else if (error.message.includes("weak-password")) {
-          errorUser.value = "The password must contain at least 6 characters";
-        }
-      });
+  const registerUser = async (credentials) => {
+    // baseStore
+    const baseStore = useBaseStore();
+    const { loader } = storeToRefs(baseStore);
+    try {
+      loader.value = true;
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      );
+      const user = userCredential.user;
+
+      await updateProfile(user, { photoURL: userStoreAvatar.value });
+
+      router.push("/");
+    } catch (error) {
+      if (error.message.includes("email-already-in-use")) {
+        errorUser.value = "Email already use";
+      } else if (error.message.includes("weak-password")) {
+        errorUser.value = "The password must contain at least 6 characters";
+      }
+    } finally {
+      loader.value = false;
+    }
   };
 
   const logoutUser = () => {
@@ -108,5 +118,6 @@ export const useStoreAuth = defineStore("storeAuth", () => {
     initAuth,
     authUser,
     errorUser,
+    userStoreAvatar,
   };
 });

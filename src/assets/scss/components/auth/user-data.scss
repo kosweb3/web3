@@ -1,4 +1,10 @@
 .user-data {
-  font-size: 14px;
-  text-align: right;
+  display: flex;
+  align-items: center;
+  &__email {
+    font-size: 12px;
+    @media (min-width: $tablet) {
+      font-size: 14px;
+    }
+  }
 }
